@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -31,7 +32,7 @@ import io.swagger.annotations.ApiParam;
 
 @RestController
 @RequestMapping("/board")
-@CrossOrigin("*")
+@CrossOrigin(origins = "*", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE })
 public class BoardController {
 
 	private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
@@ -47,7 +48,7 @@ public class BoardController {
 	}
 
 	@ApiOperation(value = "게시판 글목록", notes = "모든 게시글의 정보를 반환한다.", response = List.class)
-	@GetMapping(value = "/")
+	@GetMapping("")
 	private ResponseEntity<?> listArticle(@ApiParam(value = "게시글을 얻기위한 부가정보.", required = true)  BoardParameterDto boardParameterDto) {
 		logger.debug("boardList call");
 		try {
@@ -71,7 +72,7 @@ public class BoardController {
 	}
 	
 	@ApiOperation(value = "게시판 글보기", notes = "글번호에 해당하는 게시글의 정보를 반환한다.", response = BoardDto.class)
-	@GetMapping(value = "/{articleno}")
+	@GetMapping("/{articleno}")
 	private ResponseEntity<?> getArticle(@PathVariable("articleno") @ApiParam(value = "얻어올 글의 글번호.", required = true) int articleNo, @RequestParam Map<String, String> map) {
 		try {
 			logger.info("getArticle - 호출 : " + articleNo);
@@ -91,7 +92,7 @@ public class BoardController {
 	}
 	
 	@ApiOperation(value = "게시판 글작성", notes = "새로운 게시글 정보를 입력한다. 그리고 DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
-	@PostMapping(value = "/")
+	@PostMapping("")
 //	private String write(BoardDto boardDto, HttpSession session, Model model) {
 	private ResponseEntity<?> writeArticle(@RequestBody @ApiParam(value = "게시글 정보.", required = true) BoardDto boardDto, HttpSession session){
 		logger.debug("BoardController: writeAricle - 호출");
@@ -111,7 +112,7 @@ public class BoardController {
 	}
 	
 	@ApiOperation(value = "게시판 글수정", notes = "수정할 게시글 정보를 입력한다. 그리고 DB수정 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
-	@PutMapping("/")
+	@PutMapping("/modify")
 	private ResponseEntity<String> modifyArticle(@RequestBody @ApiParam(value = "수정할 글정보.", required = true) BoardDto boardDto) {
 		logger.debug("BoardController: modifyAricle - 호출");
 		try {
