@@ -49,6 +49,11 @@ public class SwaggerConfiguration {
 	public Docket boardApi() {
 		return getDocket("게시판", Predicates.or(PathSelectors.regex("/board.*")));
 	}
+	
+	@Bean
+	public Docket touristApi() {
+		return getDocket("지역별 검색", Predicates.or(PathSelectors.regex("/tourist.*")));
+	}
 
 	public Docket getDocket(String groupName, Predicate<String> predicate) {
 //		List<ResponseMessage> responseMessages = new ArrayList<ResponseMessage>();
