@@ -112,7 +112,6 @@ public class BoardController {
 		} catch (Exception e1) {
 			return new ResponseEntity<String>(FAIL, HttpStatus.OK);
 		}
-		
 	}
 	
 	private ResponseEntity<String> exceptionHandling(Exception e) {
