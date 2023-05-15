@@ -59,6 +59,11 @@ public class SwaggerConfiguration {
 	public Docket touristApi() {
 		return getDocket("지역별 검색", Predicates.or(PathSelectors.regex("/tourist.*")));
 	}
+	
+	@Bean
+	public Docket planApi() {
+		return getDocket("여행계획", Predicates.or(PathSelectors.regex("/plan.*")));
+	}
 
 	public Docket getDocket(String groupName, Predicate<String> predicate) {
 //		List<ResponseMessage> responseMessages = new ArrayList<ResponseMessage>();

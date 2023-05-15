@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.plan.model.mapper.PlanMapper">
+
+	<resultMap type="planDto" id="plan">
+		<result column="id" property="id"/>
+		<result column="title" property="title"/>
+		<result column="description" property="description"/>
+		<result column="created_at" property="createdAt"/>
+		<result column="updated_at" property="updatedAt"/>
+		<result column="start_date" property="startDate"/>
+		<result column="end_date" property="endDate"/>
+		<result column="user_id" property="userId"/>
+		<result column="hit" property="hit"/>
+	</resultMap>
+	
+	<resultMap type="placeDto" id="place">
+		<result column="id" property="id"/>
+		<result column="plan_id" property="planId"/>
+		<result column="name" property="name"/>
+		<result column="address" property="address"/>
+		<result column="lat" property="lat"/>
+		<result column="lng" property="lng"/>
+		<result column="image_url" property="imageUrl"/>
+	</resultMap>
+	
+	<!-- 여행 경로 추가 -->
+	<insert id="insertPlan" parameterType="planDto">
+		insert into plan (title, description, start_date, end_date, user_id, hit )
+		values (#{title}, #{description}, #{startDate}, #{endDate}, #{userId}, 0 )
+	</insert>
+	
+	
+	<!-- 여행지 추가 -->
+	<insert id="insertPlace" parameterType="placeDto">
+		insert into place (plan_id, place_id, name, address, lat, lng, image_url )
+		values (#{planId}, #{placeId}, #{name}, #{address}, #{lat}, #{lng}, #{imageUrl} )
+	</insert>
+
+
+	<!--  여행 경로 삭제 -->
+	<delete id="deletePlan" parameterType="int">
+		delete from plan
+		where id = #{id}
+	</delete>
+	
+	
+	<!-- 여행 경로 리스트 출력 -->
+	<select id="listPlan" parameterType="map" resultMap="plan">
+		select *
+		from plan
+		<where>
+			<include refid="search"></include>
+		</where>
+		order by created_at desc;
+	</select>
+	
+	
+	<!-- 글 번호에 맞는 여행 경로 출력 -->
+	<select id="selectPlanOne" parameterType="int" resultMap="plan">
+		select id, title, description, created_at, updated_at, start_date, end_date, user_id, hit 
+		from plan
+		where id = #{articleNo}
+		order by created_at desc;
+	</select>
+	
+	
+	<!-- 여행 경로에 맞는 여행지 리스트 출력 -->
+	<select id="selectPlace" parameterType="int" resultMap="place">
+		select id, name, address, lat, lng, image_url 
+		from place 
+		where plan_id = #{planId} 
+		order by id
+	</select>
+	
+	<!-- 여행 경로 id 가져오기 -->
+	<select id="selectPlanId" parameterType="map" resultType="int">
+		select id
+		from plan
+		where user_id = #{userId} and title = #{title}
+	</select>
+	
+	<!-- 조회수 증가 -->
+	<update id="updateHit" parameterType="int">
+		update plan
+		set hit = hit + 1
+		where id = #{id}
+	</update>
+	
+	<!-- 전체 게시글 수 조회 -->
+	<select id="getTotalArticleCount" parameterType="map" resultType="int">
+		select count(id)
+		from plan
+		<where>
+			<include refid="search"></include>
+		</where>
+	</select>
+	
+	<!-- 전체 place 수 조회 -->
+	<select id="getTotalPlaceCount" parameterType="int" resultType="int">
+		select count(id)
+		from place
+		where plan_id = #{planId}
+	</select>
+	
+	
+	<sql id="search">
+		<if test="word != null and word != ''">
+			<if test="key == 'title'">
+				and title like concat('%', #{word}, '%')
+			</if>
+			<if test="key != 'title'">
+				and ${key} = #{word}
+			</if>
+		</if>
+	</sql>
+
+</mapper>
