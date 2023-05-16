@@ -87,8 +87,8 @@ public class NoticeController {
 	@PostMapping("")
 	private ResponseEntity<?> writeArticle(@RequestBody @ApiParam(value = "게시글 정보.", required = true) NoticeDto noticeDto, HttpSession session){
 		logger.debug("NoticeController: writeAricle - 호출");
-		UserDto userDto = (UserDto) session.getAttribute("userinfo");
-		noticeDto.setUserId(userDto.getId());
+//		UserDto userDto = (UserDto) session.getAttribute("userinfo");
+//		noticeDto.setUserId(userDto.getId());
 		try {
 			noticeService.writeArticle(noticeDto);
 			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
@@ -99,7 +99,7 @@ public class NoticeController {
 	}
 
 	@ApiOperation(value = "공지사항 수정", notes = "수정할 공지사항 정보를 입력한다. 그리고 DB수정 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
-	@PutMapping("/modify")
+	@PutMapping("")
 	private ResponseEntity<String> modifyArticle(@RequestBody @ApiParam(value = "수정할 공지사항 정보.", required = true) NoticeDto noticeDto) {
 		logger.debug("NoticeController: modifyAricle - 호출");
 		try {
@@ -114,6 +114,7 @@ public class NoticeController {
 	@DeleteMapping("/{articleno}")
 	private ResponseEntity<String> deleteArticle(@PathVariable("articleno") @ApiParam(value = "살제할 글의 글번호.", required = true) int articleNo) {
 		try {
+			System.out.println(articleNo);
 			noticeService.deleteArticle(articleNo);
 			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 		} catch (Exception e1) {
