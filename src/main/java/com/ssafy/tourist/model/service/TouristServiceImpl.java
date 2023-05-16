@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.tourist.model.AttractionInfoDto;
+import com.ssafy.tourist.model.GugunDto;
 import com.ssafy.tourist.model.SidoDto;
 import com.ssafy.tourist.model.mapper.TouristMapper;
 
@@ -28,6 +29,11 @@ public class TouristServiceImpl implements TouristService {
 	@Override
 	public List<SidoDto> listSido() throws SQLException {
 		return touristMapper.listSido();
+	}
+
+	@Override
+	public List<GugunDto> listGugun(String sidoCode) throws SQLException {
+		return touristMapper.listGugun(sidoCode);
 	}
 	
 }

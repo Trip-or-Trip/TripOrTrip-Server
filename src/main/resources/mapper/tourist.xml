@@ -27,6 +27,11 @@
 		<result column="sido_name" property="sidoName"/>
 	</resultMap>
 	
+	<resultMap type="gugunDto" id="gugun">
+		<result column="gugun_code" property="gugunCode"/>
+		<result column="gugun_name" property="gugunName"/>
+	</resultMap>
+	
 	<select id="listTourist" parameterType="map" resultMap="attraction">
 		select * from attraction_info
 		where sido_code = #{sidoCode} and gugun_code = #{gugunCode} and content_type_id = #{contentTypeId}
@@ -35,5 +40,11 @@
 	<select id="listSido" resultMap="sido">
 		select sido_code, sido_name
 		from sido
+	</select>
+	
+	<select id="listGugun" parameterType="string" resultMap="gugun">
+		select gugun_code, gugun_name
+		from gugun
+		where sido_code = #{sidoCode}
 	</select>
 </mapper>

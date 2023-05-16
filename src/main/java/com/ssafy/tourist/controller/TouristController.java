@@ -32,6 +32,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.tourist.model.AttractionInfoDto;
+import com.ssafy.tourist.model.GugunDto;
 import com.ssafy.tourist.model.SidoDto;
 import com.ssafy.tourist.model.service.TouristService;
 
@@ -59,6 +60,22 @@ public class TouristController {
 //    	
 //    	return "tourist/region";
 //    }
+    
+    @GetMapping("")
+    public ResponseEntity<?> search() throws SQLException {
+    	logger.debug("list sido");
+    	
+    	List<SidoDto> list = touristService.listSido();
+    	return new ResponseEntity<List<SidoDto>>(list, HttpStatus.OK);
+    }
+    
+    @GetMapping("/{sidoCode}")
+    public ResponseEntity<?> search(@PathVariable("sidoCode") String sidoCode) throws SQLException {
+    	logger.debug("list sido");
+    	
+    	List<GugunDto> list = touristService.listGugun(sidoCode);
+    	return new ResponseEntity<List<GugunDto>>(list, HttpStatus.OK);
+    }
     
     @GetMapping("/{sidoCode}/{gugunCode}/{contentTypeId}")
     @ResponseBody
