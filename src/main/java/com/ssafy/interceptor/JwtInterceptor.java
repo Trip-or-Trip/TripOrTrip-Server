@@ -21,7 +21,7 @@ public class JwtInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-    	System.out.println(request.isRequestedSessionIdValid());
+    	if(request.getMethod().equals("OPTIONS"))return true;
         Enumeration<String> headers = request.getHeaders(HEADER_AUTH);
         String value = null;
     	while(headers.hasMoreElements()) {
