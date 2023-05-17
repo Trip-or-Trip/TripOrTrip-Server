@@ -80,7 +80,7 @@ public class NoticeController {
 	
 	@ApiOperation(value = "공지사항 상세보기", notes = "글번호에 해당하는 공지사항의 정보를 반환한다.", response = NoticeDto.class)
 	@GetMapping("/{articleno}")
-	private ResponseEntity<?> getArticle(@PathVariable("articleno") @ApiParam(value = "얻어올 글의 글번호.", required = true) int articleNo, @RequestParam Map<String, String> map) {
+	private ResponseEntity<?> getArticle(@PathVariable("articleno") @ApiParam(value = "얻어올 글의 글번호.", required = true) int articleNo, HttpSession session) {
 		try {
 			logger.debug("NoticeController:: getArticle - 호출 : " + articleNo);
 			NoticeDto noticeDto = noticeService.getArticle(articleNo);
@@ -124,7 +124,7 @@ public class NoticeController {
 
 	@ApiOperation(value = "공지사항 삭제", notes = "글번호에 해당하는 공지사항 정보를 삭제한다. 그리고 DB삭제 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
 	@DeleteMapping("/{articleno}")
-	private ResponseEntity<String> deleteArticle(@PathVariable("articleno") @ApiParam(value = "살제할 글의 글번호.", required = true) int articleNo) {
+	private ResponseEntity<String> deleteArticle(@PathVariable("articleno") @ApiParam(value = "살제할 글의 글번호.", required = true) int articleNo, HttpSession session) {
 		try {
 			System.out.println(articleNo);
 			noticeService.deleteArticle(articleNo);

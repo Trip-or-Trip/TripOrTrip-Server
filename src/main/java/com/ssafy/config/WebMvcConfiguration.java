@@ -22,8 +22,8 @@ import com.ssafy.interceptor.JwtInterceptor;
 public class WebMvcConfiguration implements WebMvcConfigurer{
 //	private final List<String> patterns = Arrays.asList("/hotplace/**", "/plan/**", "/board/**");
 //	private final List<String> excludePatterns = Arrays.asList("/hotplace/list", "/hotplace/image/**", "/plan/mvplanlist", "/board/list", "/board/view");
-	private final List<String> patterns = Arrays.asList("/board/**", "/hotplace/**", "notice/**", "/plan/**");
-	private final List<String> excludePatterns = Arrays.asList("/board/list", "/hotplace/list", "notice/list", "/plan/list");
+	private final List<String> patterns = Arrays.asList("/board/**", "/hotplace/**", "/notice/**", "/plan/**");
+	private final List<String> excludePatterns = Arrays.asList("/board/list", "/hotplace/list", "/notice/list", "/plan/list");
 	
 	private ConfirmInterceptor confirmInterceptor;
 	private JwtInterceptor jwtInterceptor;

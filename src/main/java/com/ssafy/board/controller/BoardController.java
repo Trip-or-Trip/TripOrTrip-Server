@@ -90,7 +90,7 @@ public class BoardController {
 	
 	@ApiOperation(value = "게시판 글작성", notes = "새로운 게시글 정보를 입력한다. 그리고 DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
 	@PostMapping("/write")
-	private ResponseEntity<?> writeArticle(@RequestBody @ApiParam(value = "게시글 정보.", required = true) BoardDto boardDto){
+	private ResponseEntity<?> writeArticle(@RequestBody @ApiParam(value = "게시글 정보.", required = true) BoardDto boardDto, HttpSession session){
 		logger.debug("BoardController: writeAricle - 호출");
 //		UserDto userDto = (UserDto) session.getAttribute("userinfo");
 //		boardDto.setUserId(userDto.getId());
