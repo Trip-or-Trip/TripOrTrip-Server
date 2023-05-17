@@ -55,7 +55,7 @@ public class NoticeController {
 	}
 
 	@ApiOperation(value = "공지사항 글목록", notes = "모든 공지사항의 정보를 반환한다.", response = List.class)
-	@GetMapping("")
+	@GetMapping("/list")
 	private ResponseEntity<?> listArticle(@ApiParam(value = "공지사항 얻기위한 부가정보.", required = true)  BoardParameterDto boardParameterDto) {
 		logger.debug("NoticeController:: listArticle call");
 		try {
@@ -67,7 +67,7 @@ public class NoticeController {
 	}
 	
 	@ApiOperation(value = "공지사항 글목록", notes = "모든 공지사항의 정보를 반환한다.", response = List.class)
-	@PostMapping("")
+	@PostMapping("/list")
 	private ResponseEntity<?> listKeywordArticle(@ApiParam(value = "공지사항 얻기위한 부가정보.", required = true) @RequestBody BoardParameterDto boardParameterDto) {
 		logger.debug("NoticeController:: listArticle keyword call");
 		try {
