@@ -14,26 +14,32 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.ssafy.interceptor.ConfirmInterceptor;
+import com.ssafy.interceptor.JwtInterceptor;
 
 @Configuration
 @MapperScan(basePackages = {"com.ssafy.**.mapper"})
 @EnableWebMvc
 public class WebMvcConfiguration implements WebMvcConfigurer{
-	private final List<String> patterns = Arrays.asList("/hotplace/**", "/plan/**", "/board/**");
-	private final List<String> excludePatterns = Arrays.asList("/hotplace/list", "/hotplace/image/**", "/plan/mvplanlist", "/board/list", "/board/view");
-	private ConfirmInterceptor confirmInterceptor;
+//	private final List<String> patterns = Arrays.asList("/hotplace/**", "/plan/**", "/board/**");
+//	private final List<String> excludePatterns = Arrays.asList("/hotplace/list", "/hotplace/image/**", "/plan/mvplanlist", "/board/list", "/board/view");
+	private final List<String> patterns = Arrays.asList("/board/**", "/hotplace/**", "notice/**", "/plan/**");
+	private final List<String> excludePatterns = Arrays.asList("/board/list", "/hotplace/list", "notice/list", "/plan/list");
 	
-	public WebMvcConfiguration(ConfirmInterceptor confirmInterceptor) {
+	private ConfirmInterceptor confirmInterceptor;
+	private JwtInterceptor jwtInterceptor;
+	
+	public WebMvcConfiguration(ConfirmInterceptor confirmInterceptor, JwtInterceptor jwtInterceptor) {
 		this.confirmInterceptor = confirmInterceptor;
+		this.jwtInterceptor = jwtInterceptor;
 	}
 
-//	@Override
-//	public void addInterceptors(InterceptorRegistry registry) {
-////		registry.addInterceptor(confirmInterceptor).addPathPatterns(patterns);
-//		registry.addInterceptor(confirmInterceptor)
-//        .addPathPatterns(patterns)
-//        .excludePathPatterns(excludePatterns);
-//	}
+	@Override
+	public void addInterceptors(InterceptorRegistry registry) {
+//		registry.addInterceptor(confirmInterceptor).addPathPatterns(patterns);
+		registry.addInterceptor(jwtInterceptor)
+        .addPathPatterns(patterns)
+        .excludePathPatterns(excludePatterns);
+	}
 
 	@Override
 	public void addCorsMappings(CorsRegistry registry) {

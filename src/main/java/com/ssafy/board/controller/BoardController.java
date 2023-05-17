@@ -48,7 +48,7 @@ public class BoardController {
 	}
 
 	@ApiOperation(value = "게시판 글목록", notes = "모든 게시글의 정보를 반환한다.", response = List.class)
-	@GetMapping("")
+	@GetMapping("/list")
 	private ResponseEntity<?> listArticle(@ApiParam(value = "게시글을 얻기위한 부가정보.", required = true)  BoardParameterDto boardParameterDto) {
 		logger.debug("boardList call");
 		try {
@@ -59,7 +59,7 @@ public class BoardController {
 		}
 	}
 	@ApiOperation(value = "게시판 글목록", notes = "모든 게시글의 정보를 반환한다.", response = List.class)
-	@PostMapping("")
+	@PostMapping("/list")
 	private ResponseEntity<?> listKeywordArticle(@ApiParam(value = "게시글을 얻기위한 부가정보.", required = true) @RequestBody BoardParameterDto boardParameterDto) {
 		logger.debug("boardList call");
 		try {

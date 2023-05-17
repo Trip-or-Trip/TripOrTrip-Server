@@ -22,10 +22,10 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @SuppressWarnings("unchecked") // warning 제거
 public class SwaggerConfiguration {
 
-//	Swagger-UI 2.x 확인
-//	http://localhost[:8080]/{your-app-root}/swagger-ui.html
-//	Swagger-UI 3.x 확인
-//	http://localhost[:8080]/{your-app-root}/swagger-ui/index.html
+	// Swagger-UI 2.x 확인
+	// http://localhost[:8080]/{your-app-root}/swagger-ui.html
+	// Swagger-UI 3.x 확인
+	// http://localhost[:8080]/{your-app-root}/swagger-ui/index.html
 
 	private String version = "V1";
 	private String title = "SSAFY Board-Vuejs API " + version;
@@ -34,7 +34,7 @@ public class SwaggerConfiguration {
 		String descript = "SSAFY Vuejs API Reference for Developers<br>";
 		descript += "<img src=\"http://localhost:9999/vue/static/assets/img/ssafy_logo.png\">";
 		return new ApiInfoBuilder().title(title).description(descript)
-//				.termsOfServiceUrl("https://edu.ssafy.com")
+				// .termsOfServiceUrl("https://edu.ssafy.com")
 				.contact(new Contact("SSAFY", "https://edu.ssafy.com", "ssafy@ssafy.com")).license("SSAFY License")
 				.licenseUrl("ssafy@ssafy.com").version("1.0").build();
 	}
@@ -44,40 +44,43 @@ public class SwaggerConfiguration {
 	public Docket userApi() {
 		return getDocket("회원", Predicates.or(PathSelectors.regex("/user.*")));
 	}
-	
+
 	@Bean
 	public Docket boardApi() {
 		return getDocket("게시판", Predicates.or(PathSelectors.regex("/board.*")));
 	}
-	
+
 	@Bean
 	public Docket noticeApi() {
 		return getDocket("공지사항", Predicates.or(PathSelectors.regex("/notice.*")));
 	}
-	
+
 	@Bean
 	public Docket touristApi() {
 		return getDocket("지역별 검색", Predicates.or(PathSelectors.regex("/tourist.*")));
 	}
-	
+
 	@Bean
 	public Docket planApi() {
 		return getDocket("여행계획", Predicates.or(PathSelectors.regex("/plan.*")));
 	}
 
 	public Docket getDocket(String groupName, Predicate<String> predicate) {
-//		List<ResponseMessage> responseMessages = new ArrayList<ResponseMessage>();
-//		responseMessages.add(new ResponseMessageBuilder().code(200).message("OK !!!").build());
-//		responseMessages.add(new ResponseMessageBuilder().code(500).message("서버 문제 발생 !!!").responseModel(new ModelRef("Error")).build());
-//		responseMessages.add(new ResponseMessageBuilder().code(404).message("페이지를 찾을 수 없습니다 !!!").build());
+		// List<ResponseMessage> responseMessages = new ArrayList<ResponseMessage>();
+		// responseMessages.add(new ResponseMessageBuilder().code(200).message("OK
+		// !!!").build());
+		// responseMessages.add(new ResponseMessageBuilder().code(500).message("서버 문제 발생
+		// !!!").responseModel(new ModelRef("Error")).build());
+		// responseMessages.add(new ResponseMessageBuilder().code(404).message("페이지를 찾을
+		// 수 없습니다 !!!").build());
 		return new Docket(DocumentationType.SWAGGER_2).groupName(groupName).apiInfo(apiInfo()).select()
-//				.apis(RequestHandlerSelectors.basePackage("com.ssafy.user.controller"))
-//				.paths(predicate)
+				// .apis(RequestHandlerSelectors.basePackage("com.ssafy.user.controller"))
+				// .paths(predicate)
 				.apis(RequestHandlerSelectors.any())
 				.paths(predicate)
 				.build();
-//				.useDefaultResponseMessages(false)
-//				.globalResponseMessage(RequestMethod.GET,responseMessages);
+		// .useDefaultResponseMessages(false)
+		// .globalResponseMessage(RequestMethod.GET,responseMessages);
 	}
 
 	// swagger ui 설정.

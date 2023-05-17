@@ -59,6 +59,11 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
+	public UserDto findUserById(String id) throws SQLException {
+		return userMapper.findUserById(id);
+	}
+	
+	@Override
 	public UserDto findUser(String id, String emailId, String emailDomain) throws SQLException {
 		return userMapper.findUser(id, emailId, emailDomain);
 	}

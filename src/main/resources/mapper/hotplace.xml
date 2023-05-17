@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.hotplace.model.mapper.HotplaceMapper">
+	
+	<resultMap type="hotplaceDto" id="hotplace">
+		<result column="user_id" property="userId"></result>
+		<result column="image" property="image"></result>
+		<result column="title" property="title"></result>
+		<result column="join_date" property="joinDate"></result>
+		<result column="desc" property="desc"></result>
+		<result column="tag1" property="tag1"></result>
+		<result column="tag2" property="tag2"></result>
+		<result column="latitude" property="latitude"></result>
+		<result column="longitude" property="longitude"></result>
+		<result column="map_url" property="mapUrl"></result>
+	</resultMap>
+	
+	<select id="listHotplace" resultMap="hotplace">
+		select num, user_id, image, title, join_date, `desc`, tag1, tag2, latitude, longitude, map_url
+		from hotplace
+	</select>
+	
+	<insert id="insertHotplace" parameterType="hotplaceDto">
+		insert into hotplace (user_id, image, title, join_date, `desc`, tag1, tag2, latitude, longitude, map_url)
+		values (#{userId}, #{image}, #{title}, #{joinDate}, #{desc}, #{tag1}, #{tag2}, #{latitude}, #{longitude}, #{mapUrl})
+	</insert>
+	
+	<select id="viewHotplace" parameterType="string" resultMap="hotplace">
+		select * from hotplace
+		where num = #{num}
+	</select>
+	
+	<select id="findOriginalImage" parameterType="string" resultType="string">
+		select image from hotplace
+		where num = #{num}
+	</select>
+	
+	<update id="updateHotplace" parameterType="hotplaceDto">
+		update hotplace
+		set image = #{image}, title = #{title}, join_date = #{joinDate}, `desc` = #{desc}, tag1 = #{tag1}, tag2 = #{tag2}, latitude = #{latitude}, longitude = #{longitude}, map_url = #{mapUrl}
+		where user_id = #{userId} and num = #{num}
+	</update>
+	
+	<delete id="deleteHotplace" parameterType="string">
+		delete from hotplace
+		where num = #{num}
+	</delete>
+	
+</mapper>

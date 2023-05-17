@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.ssafy</groupId>
-	<artifactId>pjt_backup</artifactId>
+	<artifactId>trip_restapi</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>pjt_backup</name>
-	<description>spring proejct</description>
+	<name>trip_restapi</name>
+	<description>trip rest api project </description>
 	<properties>
 		<java.version>1.8</java.version>
 	</properties>
@@ -58,7 +58,14 @@
 			<artifactId>tomcat-embed-jasper</artifactId>
 		</dependency>
 		
-		<!-- swagger를 위한 의존성 추가. springfox로 검색 -->
+		<!-- email setting -->
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-mail</artifactId>
+		</dependency>
+		
+		<!-- swagger를 위한 의존성 추가 -->
+		<!-- https://mvnrepository.com/artifact/io.springfox/springfox-boot-starter -->
 		<dependency>
 			<groupId>io.springfox</groupId>
 			<artifactId>springfox-swagger2</artifactId>
@@ -87,13 +94,11 @@
 			<artifactId>jjwt</artifactId>
 			<version>0.9.1</version>
 		</dependency>
-		
-		<!-- email setting -->
 		<dependency>
-		    <groupId>org.springframework.boot</groupId>
-		    <artifactId>spring-boot-starter-mail</artifactId>
-		</dependency>
-		
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+            <version>2.3.1</version>
+        </dependency>
 		
 	</dependencies>
 

@@ -12,6 +12,7 @@ public interface UserService {
 	int updateUser(UserDto userDto) throws SQLException;
 	int idCheck(String id) throws SQLException;
 	int emailCheck(String emailId, String emailDomain) throws SQLException;
+	UserDto findUserById(String id) throws SQLException;
 	
 	UserDto findUser(String id, String emailId, String emailDomain) throws SQLException;
 	MailDto createMailAndChangePassword(String id, String emailId, String emailDomain) throws SQLException;

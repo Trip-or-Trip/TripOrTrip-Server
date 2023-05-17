@@ -48,7 +48,7 @@ public class PlanController {
 	}
 	
 	@ApiOperation(value = "여행계획 목록", notes = "모든 여행계획 정보를 반환한다.", response = List.class)
-	@GetMapping("")
+	@GetMapping("/list")
 	private ResponseEntity<?> listPlan(@ApiParam(value = "여행계획을 얻기위한 부가정보.", required = true)  BoardParameterDto boardParameterDto) {
 		logger.info("PlanController :: listPlan - 호출 " );
 		try {			
@@ -60,7 +60,7 @@ public class PlanController {
 	}
 	
 	@ApiOperation(value = "여행계획 목록", notes = "모든 여행계획 정보를 반환한다.", response = List.class)
-	@PostMapping("")
+	@PostMapping("/list")
 	private ResponseEntity<?> listKeywordPlan(@ApiParam(value = "여행계획을 얻기위한 부가정보.", required = true) @RequestBody BoardParameterDto boardParameterDto) {
 		logger.info("PlanController :: listPlan Keyword - 호출 " );
 		try {			

@@ -1,25 +1,18 @@
 package com.ssafy.user.controller;
 
-import java.security.KeyFactory;
-import java.security.KeyPair;
-import java.security.KeyPairGenerator;
-import java.security.PrivateKey;
-import java.security.PublicKey;
-import java.security.spec.RSAPublicKeySpec;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Enumeration;
 
-import javax.crypto.Cipher;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,13 +20,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.ssafy.exception.UnauthorizedException;
+import com.ssafy.jwt.JwtService;
 import com.ssafy.mail.model.MailDto;
 import com.ssafy.user.model.UserDto;
 import com.ssafy.user.model.service.UserService;
@@ -51,90 +45,44 @@ public class UserController {
 	private final Logger logger = LoggerFactory.getLogger(UserController.class);
 
 	private UserService userService;
-//	private RSAUtil rsaUtil;
+	private JwtService jwtService;
 
-	private static String RSA_WEB_KEY = "_RSA_WEB_Key_"; // 개인키 session key
-	private static String RSA_INSTANCE = "RSA"; // rsa transformation
-
-	public UserController(UserService userService) {
+	public UserController(UserService userService, JwtService jwtService) {
 		super();
 		this.userService = userService;
+		this.jwtService = jwtService;
 	}
-
-	/**
-	 * 복호화
-	 */
-	private String decryptRsa(PrivateKey privateKey, String securedValue) throws Exception {
-		Cipher cipher = Cipher.getInstance(RSA_INSTANCE);
-		byte[] encryptedBytes = hexToByteArray(securedValue);
-		cipher.init(Cipher.DECRYPT_MODE, privateKey);
-		byte[] decryptedBytes = cipher.doFinal(encryptedBytes);
-		String decryptedValue = new String(decryptedBytes, "utf-8"); // 문자 인코딩 주의
-		return decryptedValue;
+	
+	@GetMapping(path = "/token")
+	@ApiOperation(value = "토큰 정보를 바탕으로 사용자 정보를 구한다.", response = UserDto.class)
+	public ResponseEntity<?> token(@RequestHeader("Authorization") String token) throws SQLException {
+		token = token.split(" ")[1];
+		String id = jwtService.getSubject(token);
+		
+		logger.debug("token: {}, id: {}", token, id);
+		
+		UserDto userDto = userService.findUserById(id);
+		return new ResponseEntity<UserDto>(userDto, HttpStatus.OK);
 	}
-
-	/**
-	 * 16진 문자열을 byte 배열로 변환
-	 */
-	public byte[] hexToByteArray(String hex) {
-		if (hex == null || hex.length() % 2 != 0) {
-			return new byte[] {};
-		}
-
-		byte[] bytes = new byte[hex.length() / 2];
-		for (int i = 0; i < hex.length(); i += 2) {
-			byte value = (byte) Integer.parseInt(hex.substring(i, i + 2), 16);
-			bytes[(int) Math.floor(i / 2)] = value;
-		}
-		return bytes;
-	}
-
-	/**
-	 * rsa 공개키, 개인키 생성
-	 */
-	public Map<String, String> initRsa(HttpSession session) {
-		KeyPairGenerator generator;
-		try {
-			generator = KeyPairGenerator.getInstance(RSA_INSTANCE);
-			generator.initialize(1024);
-
-			KeyPair keyPair = generator.genKeyPair();
-			KeyFactory keyFactory = KeyFactory.getInstance(RSA_INSTANCE);
-			PublicKey publicKey = keyPair.getPublic();
-			PrivateKey privateKey = keyPair.getPrivate();
-			
-			if(session.getAttribute(RSA_WEB_KEY) != null) {
-				session.removeAttribute(RSA_WEB_KEY);
-			}
-			session.setAttribute(RSA_WEB_KEY, privateKey);
-
-			RSAPublicKeySpec publicSpec = (RSAPublicKeySpec) keyFactory.getKeySpec(publicKey, RSAPublicKeySpec.class);
-			String publicKeyModulus = publicSpec.getModulus().toString(16);
-			String publicKeyExponent = publicSpec.getPublicExponent().toString(16);
-
-			Map<String, String> map = new HashMap<String, String>();
-			map.put("RSAModulus", publicKeyModulus); // rsa modulus 를 request 에 추가
-			map.put("RSAExponent", publicKeyExponent); // rsa exponent 를 request 에 추가
-			
-			return map;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
+		
 	
 	@PostMapping("/auth")
 	@ApiOperation(value = "입력된 사용자 정보를 이용해 로그인한다.", response = UserDto.class)
-	public ResponseEntity<?> signin(@RequestBody @ApiParam(value = "로그인한 회원 정보", required = true) UserDto userDto, HttpSession session) throws SQLException {
+	public String signin(@RequestBody @ApiParam(value = "로그인한 회원 정보", required = true) UserDto userDto, HttpServletResponse response) throws SQLException {
 		logger.debug("login user: {}", userDto.toString());
 		
 		UserDto user = userService.signinUser(userDto.getId(), userDto.getPassword());
 		if(user != null) {
-			session.setAttribute("userinfo", user);
-			return new ResponseEntity<UserDto>(user, HttpStatus.OK);
+			String token = jwtService.createToken(user.getId() + "", (60 * 1000 * 60));
+			System.out.println(token);
+			response.setHeader("authorization", token);
+			return token;
+//			return new ResponseEntity<UserDto>(user, HttpStatus.OK);
 		}
 		else {
-			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+//			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+			new UnauthorizedException();
+			return null;
 		}
 	}
 	

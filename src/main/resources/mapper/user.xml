@@ -34,6 +34,12 @@
 		where id = #{id}
 	</update>
 	
+	<select id="findUserById" parameterType="string" resultType="userDto">
+		select id, name, email_id emailId, email_domain emailDomain, grade
+		from user
+		where id = #{id}
+	</select>
+	
 	<select id="idCheck" parameterType="string" resultType="int">
 		select count(id) from user
 		where id = #{id}
