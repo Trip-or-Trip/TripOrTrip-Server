@@ -55,6 +55,7 @@ public class WebMvcConfiguration implements WebMvcConfigurer{
 					HttpMethod.DELETE.name(), HttpMethod.HEAD.name(), HttpMethod.OPTIONS.name(),
 					HttpMethod.PATCH.name())
 //			.allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH", "HEAD")
+			.exposedHeaders("Authorization")
 			.maxAge(1800);
 	}
 

@@ -1,5 +1,7 @@
 package com.ssafy.interceptor;
 
+import java.util.Enumeration;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -19,11 +21,19 @@ public class JwtInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        String token = request.getHeader(HEADER_AUTH);
-        System.out.println(token);
+    	System.out.println(request.isRequestedSessionIdValid());
+        Enumeration<String> headers = request.getHeaders(HEADER_AUTH);
+        String value = null;
+    	while(headers.hasMoreElements()) {
+    		value = headers.nextElement();
+    	}
+    	System.out.println("value: " + value);
+    	
+    	String token = request.getHeader(HEADER_AUTH);
+        System.out.println("token: " + token);
         if(token != null) {
         	token = token.split(" ")[1];
-            System.out.println(token);
+            System.out.println("modify token: " + token);
         	if(jwtService.isUsable(token)) {
         		return true;
         	}
