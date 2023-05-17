@@ -35,5 +35,10 @@ public class TouristServiceImpl implements TouristService {
 	public List<GugunDto> listGugun(String sidoCode) throws SQLException {
 		return touristMapper.listGugun(sidoCode);
 	}
+
+	@Override
+	public String getImageUrl(int id) throws SQLException {
+		return touristMapper.getImageUrl(id);
+	}
 	
 }

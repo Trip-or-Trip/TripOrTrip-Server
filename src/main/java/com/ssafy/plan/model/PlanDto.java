@@ -13,6 +13,16 @@ public class PlanDto {
 	private Date endDate;
 	private String userId;
 	private int hit;
+	private PlaceDto places[];
+	
+	
+	public PlaceDto[] getPlaces() {
+		return places;
+	}
+
+	public void setPlaces(PlaceDto[] places) {
+		this.places = places;
+	}
 
 	public int getId() {
 		return id;

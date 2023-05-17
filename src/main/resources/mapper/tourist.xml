@@ -47,4 +47,10 @@
 		from gugun
 		where sido_code = #{sidoCode}
 	</select>
+	
+	<select id="getImageUrl" parameterType="int" resultType="string">
+		select first_image
+		from attraction_info
+		where content_id = #{id}
+	</select>
 </mapper>

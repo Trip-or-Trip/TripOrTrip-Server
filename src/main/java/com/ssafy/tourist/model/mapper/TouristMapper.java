@@ -21,4 +21,6 @@ public interface TouristMapper {
 	List<AttractionInfoDto> listTourist(Map<String, String> param) throws SQLException;
 //	    List<AttractionInfoDto> getTouristList(int sidoCode, int gugunCode, int contentTypeId) throws SQLException;
 //	List<AttractionInfoDto> listTourist(int sidoCode, int gugunCode, int contentTypeId) throws SQLException;
+
+	String getImageUrl(int id) throws SQLException;
 }

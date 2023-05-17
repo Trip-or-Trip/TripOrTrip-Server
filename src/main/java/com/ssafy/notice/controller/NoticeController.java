@@ -66,6 +66,18 @@ public class NoticeController {
 		}
 	}
 	
+	@ApiOperation(value = "공지사항 글목록", notes = "모든 공지사항의 정보를 반환한다.", response = List.class)
+	@PostMapping("")
+	private ResponseEntity<?> listKeywordArticle(@ApiParam(value = "공지사항 얻기위한 부가정보.", required = true) @RequestBody BoardParameterDto boardParameterDto) {
+		logger.debug("NoticeController:: listArticle keyword call");
+		try {
+			List<NoticeDto> list = noticeService.listArticle(boardParameterDto);
+			return new ResponseEntity<List<NoticeDto>>(list, HttpStatus.OK);
+		} catch (Exception e) {
+			return exceptionHandling(e);
+		}
+	}
+	
 	@ApiOperation(value = "공지사항 상세보기", notes = "글번호에 해당하는 공지사항의 정보를 반환한다.", response = NoticeDto.class)
 	@GetMapping("/{articleno}")
 	private ResponseEntity<?> getArticle(@PathVariable("articleno") @ApiParam(value = "얻어올 글의 글번호.", required = true) int articleNo, @RequestParam Map<String, String> map) {
@@ -84,7 +96,7 @@ public class NoticeController {
 	}
 
 	@ApiOperation(value = "공지사항 작성", notes = "새로운 공지사항을 작성한다. 그리고 DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
-	@PostMapping("")
+	@PostMapping("/write")
 	private ResponseEntity<?> writeArticle(@RequestBody @ApiParam(value = "게시글 정보.", required = true) NoticeDto noticeDto, HttpSession session){
 		logger.debug("NoticeController: writeAricle - 호출");
 //		UserDto userDto = (UserDto) session.getAttribute("userinfo");

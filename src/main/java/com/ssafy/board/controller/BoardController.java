@@ -58,6 +58,18 @@ public class BoardController {
 			return exceptionHandling(e);
 		}
 	}
+	@ApiOperation(value = "게시판 글목록", notes = "모든 게시글의 정보를 반환한다.", response = List.class)
+	@PostMapping("")
+	private ResponseEntity<?> listKeywordArticle(@ApiParam(value = "게시글을 얻기위한 부가정보.", required = true) @RequestBody BoardParameterDto boardParameterDto) {
+		logger.debug("boardList call");
+		try {
+			System.out.println(boardParameterDto.toString());
+			List<BoardDto> list = boardService.listArticle(boardParameterDto);
+			return new ResponseEntity<List<BoardDto>>(list, HttpStatus.OK);
+		} catch (Exception e) {
+			return exceptionHandling(e);
+		}
+	}
 	
 	@ApiOperation(value = "게시판 글보기", notes = "글번호에 해당하는 게시글의 정보를 반환한다.", response = BoardDto.class)
 	@GetMapping("/{articleno}")
@@ -77,7 +89,7 @@ public class BoardController {
 	}
 	
 	@ApiOperation(value = "게시판 글작성", notes = "새로운 게시글 정보를 입력한다. 그리고 DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
-	@PostMapping("")
+	@PostMapping("/write")
 	private ResponseEntity<?> writeArticle(@RequestBody @ApiParam(value = "게시글 정보.", required = true) BoardDto boardDto, HttpSession session){
 		logger.debug("BoardController: writeAricle - 호출");
 //		UserDto userDto = (UserDto) session.getAttribute("userinfo");

@@ -1,6 +1,8 @@
 package com.ssafy.tourist.controller;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -89,5 +91,15 @@ public class TouristController {
     	
     	List<AttractionInfoDto> list = touristService.listTourist(param);
     	return new ResponseEntity<List<AttractionInfoDto>>(list, HttpStatus.OK);
+    }
+    
+    @GetMapping("/img/{id}")
+    @ResponseBody
+    public ResponseEntity<String> searchImgUrl(@PathVariable("id") int id) throws SQLException {
+    	logger.debug("search img at : {}", id);
+    	
+    	String url = touristService.getImageUrl(id);
+    	logger.debug("response: ", url);
+    	return new ResponseEntity<String>(url, HttpStatus.OK);
     }
 }

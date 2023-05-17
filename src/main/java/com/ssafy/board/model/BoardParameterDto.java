@@ -7,20 +7,21 @@ import io.swagger.annotations.ApiModelProperty;
 public class BoardParameterDto {
 
 	@ApiModelProperty(value = "현재 페이지 번호")
-	private int pg;
+	private int pg = 1;
 	@ApiModelProperty(value = "페이지당 글갯수")
-	private int spp;
+	private int spp = 20;
 	@ApiModelProperty(value = "페이지의 시작 글번호")
-	private int start;
+	private int start = 1;
 	@ApiModelProperty(value = "검색 조건")
 	private String key;
 	@ApiModelProperty(value = "검색어")
 	private String word;
 	
-	public BoardParameterDto() {
-		pg = 1;
-		spp = 20;
-	}
+//	public BoardParameterDto() {
+//		pg = 1;
+//		spp = 20;
+//		start = 1;
+//	}
 
 	public int getPg() {
 		return pg;
@@ -62,6 +63,14 @@ public class BoardParameterDto {
 	public void setWord(String word) {
 		this.word = word;
 	}
+
+	@Override
+	public String toString() {
+		return "BoardParameterDto [pg=" + pg + ", spp=" + spp + ", start=" + start + ", key=" + key + ", word=" + word
+				+ "]";
+	}
+	
+	
 
 }
 

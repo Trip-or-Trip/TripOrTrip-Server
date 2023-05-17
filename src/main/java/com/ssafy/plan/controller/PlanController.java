@@ -59,6 +59,18 @@ public class PlanController {
 		}
 	}
 	
+	@ApiOperation(value = "여행계획 목록", notes = "모든 여행계획 정보를 반환한다.", response = List.class)
+	@PostMapping("")
+	private ResponseEntity<?> listKeywordPlan(@ApiParam(value = "여행계획을 얻기위한 부가정보.", required = true) @RequestBody BoardParameterDto boardParameterDto) {
+		logger.info("PlanController :: listPlan Keyword - 호출 " );
+		try {			
+			List<PlanDto> list = planService.listPlan(boardParameterDto);
+			return new ResponseEntity<List<PlanDto>>(list, HttpStatus.OK);
+		} catch (Exception e) {
+			return exceptionHandling(e);
+		}
+	}
+	
 	/**
 	 *  여행계획 상세 조회 메서드
 	 * @param articleNo : 조회할 게시글 번호
@@ -92,20 +104,24 @@ public class PlanController {
 
 	/** form 에서 여행 계획을 저장한다고 submit을 할 때 호출 됨 */
 	@ApiOperation(value = "여행 계획 작성", notes = "새로운 여행계획을 입력한다. 그리고 DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
-	@PostMapping("")
-	private ResponseEntity<?> writePlan(@RequestBody @ApiParam(value = "여행계획 정보.", required = true) PlanDto planDto, 
-			@RequestBody @ApiParam(value = "여행 장소 정보.", required = true) PlaceDto places[], HttpSession session){
+	@PostMapping("/write")
+	private ResponseEntity<?> writePlan(@RequestBody @ApiParam(value = "여행계획 정보.", required = true) PlanDto planDto 
+			){
 		logger.info("PlanController:: writePlan - 호출 ");
+		if(planDto.getPlaces().length == 0 ) {
+			return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
+		}
 		try {
-			UserDto userDto = (UserDto) session.getAttribute("userinfo");
-			planDto.setUserId(userDto.getId());
 			// 1. 여행지 계획 담기
 			planService.insertPlan(planDto);
+			planDto.setUserId("ssafy");
 			// 2. 여행지 정보 담기			
 			// 여행지 계획의 plan_id 가져오기
-			int planId = planService.selectPlanId(userDto.getId(), planDto.getTitle());
-			for (PlaceDto place : places) {
-				place.setId(planId);
+			
+			int planId = planService.selectPlanId(planDto.getUserId(), planDto.getTitle());
+			for (PlaceDto place : planDto.getPlaces()) {
+				place.setPlanId(planId);
+				System.out.println(place.toString());
 				planService.insertPlace(place);
 			}
 			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
