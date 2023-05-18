@@ -17,6 +17,10 @@
 		<result column="map_url" property="mapUrl"></result>
 	</resultMap>
 	
+	<resultMap type="int" id="like">
+		<result column="hotplace_id" property="hotplaceId"></result>
+	</resultMap>
+	
 	<select id="listHotplace" resultMap="hotplace">
 		select num, user_id, image, title, join_date, `desc`, tag1, tag2, latitude, longitude, map_url
 		from hotplace
@@ -43,9 +47,37 @@
 		where user_id = #{userId} and num = #{num}
 	</update>
 	
+	<insert id="insertLike" parameterType="map">
+		insert into `like`(user_id, hotplace_id) 
+		values (#{userId}, #{num})
+	</insert>
+	
+	<update id="plusLikeCnt" parameterType="string">
+		update hotplace
+		set like_cnt = like_cnt +1
+		where num = #{num}
+	</update>
+	
+	<delete id="deleteLike" parameterType="map">
+		delete from `like`
+		where user_id = #{userId} and hotplace_id = #{num}
+	</delete>
+	
+	<update id="minusLikeCnt" parameterType="string">
+		update hotplace
+		set like_cnt = like_cnt - 1
+		where num = #{num}
+	</update>
+	
 	<delete id="deleteHotplace" parameterType="string">
 		delete from hotplace
 		where num = #{num}
 	</delete>
+	
+	<select id="listLike" parameterType="string" resultType="java.util.List">
+		select hotplace_id
+		from `like`
+		where user_id = #{userId}
+	</select>
 	
 </mapper>

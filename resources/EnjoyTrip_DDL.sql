@@ -38,6 +38,7 @@ CREATE TABLE IF NOT EXISTS `hotplace` (
   `latitude` DECIMAL(20, 17) NULL,
   `longitude` DECIMAL(20, 17) NULL,
   `map_url` VARCHAR(100) NULL,
+  `like_cnt` INT NOT NULL DEFAULT 0,
   PRIMARY KEY (`num`),
   CONSTRAINT `f_user_id`
 	FOREIGN KEY(`user_id`)

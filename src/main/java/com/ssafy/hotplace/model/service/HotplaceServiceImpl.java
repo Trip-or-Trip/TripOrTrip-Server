@@ -92,6 +92,31 @@ public class HotplaceServiceImpl implements HotplaceService {
 	public int deleteHotplace(String num) throws SQLException {
 		return hotplaceMapper.deleteHotplace(num);
 	}
+
+	@Override
+	public void plusLikeCnt(String num) throws SQLException {
+		hotplaceMapper.plusLikeCnt(num);
+	}
+
+	@Override
+	public void minusLikeCnt(String num) throws SQLException {
+		hotplaceMapper.minusLikeCnt(num);
+	}
+
+	@Override
+	public int insertLike(Map<String, String> map) throws Exception {
+		return hotplaceMapper.insertLike(map);
+	}
+
+	@Override
+	public int deleteLike(Map<String, String> map) throws Exception {
+		return hotplaceMapper.deleteLike(map);
+	}
+
+	@Override
+	public List<Integer> listLike(String userId) throws SQLException {
+		return hotplaceMapper.listLike(userId);
+	}
 	
 	
 }

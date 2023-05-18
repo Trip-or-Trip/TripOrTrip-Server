@@ -2,6 +2,7 @@ package com.ssafy.hotplace.model.mapper;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -20,4 +21,12 @@ public interface HotplaceMapper {
 	int updateHotplace(HotplaceDto hotplaceDto) throws SQLException;
 
 	int deleteHotplace(String num) throws SQLException;
+	
+	void plusLikeCnt(String num) throws SQLException;
+	void minusLikeCnt(String num) throws SQLException;
+	
+	int insertLike(Map<String, String> map) throws Exception;
+	int deleteLike(Map<String, String> map) throws Exception;
+	
+	List<Integer> listLike(String userId) throws SQLException;
 }

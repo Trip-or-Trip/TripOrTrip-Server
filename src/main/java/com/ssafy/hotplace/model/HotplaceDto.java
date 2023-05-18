@@ -12,8 +12,14 @@ public class HotplaceDto {
 	private double latitude;
 	private double longitude;
 	private String mapUrl;
+	private boolean like = false;
 	
-	
+	public boolean getLike() {
+		return like;
+	}
+	public void setLike(boolean like) {
+		this.like = like;
+	}
 	public String getUserId() {
 		return userId;
 	}

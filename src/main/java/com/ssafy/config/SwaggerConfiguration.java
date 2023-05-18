@@ -28,15 +28,14 @@ public class SwaggerConfiguration {
 	// http://localhost[:8080]/{your-app-root}/swagger-ui/index.html
 
 	private String version = "V1";
-	private String title = "SSAFY Board-Vuejs API " + version;
+	private String title = "Trip or Trip API " + version;
 
 	private ApiInfo apiInfo() {
-		String descript = "SSAFY Vuejs API Reference for Developers<br>";
-		descript += "<img src=\"http://localhost:9999/vue/static/assets/img/ssafy_logo.png\">";
+		String descript = "Trip or Trip Vuejs API Reference for Developers<br>";
 		return new ApiInfoBuilder().title(title).description(descript)
 				// .termsOfServiceUrl("https://edu.ssafy.com")
-				.contact(new Contact("SSAFY", "https://edu.ssafy.com", "ssafy@ssafy.com")).license("SSAFY License")
-				.licenseUrl("ssafy@ssafy.com").version("1.0").build();
+				.contact(new Contact("admin", "https://github.com/Trip-or-Trip", "gunhoo2016@gmail.com")).license("Trip or Trip License")
+				.licenseUrl("gunhoo2016@gmail.com").version("1.0").build();
 	}
 
 	// API마다 구분짓기 위한 설정.
@@ -63,6 +62,11 @@ public class SwaggerConfiguration {
 	@Bean
 	public Docket planApi() {
 		return getDocket("여행계획", Predicates.or(PathSelectors.regex("/plan.*")));
+	}
+	
+	@Bean
+	public Docket hotplaceApi() {
+		return getDocket("핫플레이스", Predicates.or(PathSelectors.regex("/hotplace.*")));
 	}
 
 	public Docket getDocket(String groupName, Predicate<String> predicate) {
