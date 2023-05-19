@@ -196,11 +196,7 @@ public class HotplaceController {
 	
 	@ApiOperation(value = "핫플레이스 좋아요기능", notes = "글 번호에 해당하는 핫플레이스를 좋아요한다. \n 이미 좋아요 등록이 되어있다면 해제한다.", response = String.class)
 	@PutMapping("")
-	public ResponseEntity<String> like(/* userId랑 hotplaceId(num)을 받아야해 Map<String, String> map*/ String userId, String num){
-		Map<String, String> map = new HashMap();
-		map.put("num", num);
-		map.put("userId", userId);
-		
+	public ResponseEntity<String> like(@RequestBody Map<String, String> map){
 		System.out.println(map.toString());
 		try {
 			if(hotplaceService.deleteLike(map) > 0) { // 만약 지웠는데 성공했다면
