@@ -107,7 +107,6 @@ public class HotplaceController {
 	 *  formData.append("image", file.files[0]);
 	 * @return
 	 */
-//	public ResponseEntity<?> insert(@RequestBody HotplaceDto hotplaceDto, @RequestParam("hotplace-image") MultipartFile file, HttpSession session) {
 	public ResponseEntity<?> insert( 
 			@RequestParam("userId") String userId,
 			@RequestParam("title") String title,
@@ -141,7 +140,7 @@ public class HotplaceController {
 				try {
 					file.transferTo(new File(folder, saveFileName));
 					int result = hotplaceService.insertHotplace(hotplaceDto);
-					return new ResponseEntity<Integer>(result, HttpStatus.CREATED);
+					return new ResponseEntity<String>(saveFileName, HttpStatus.CREATED);
 				} catch (Exception e) {
 					e.printStackTrace();
 					return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
