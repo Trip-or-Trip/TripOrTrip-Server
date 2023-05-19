@@ -42,7 +42,15 @@
 		  WHEN user_id = 'admin' THEN 0 
 		  ELSE 1 
 		END ASC, 
-  		created_at DESC;
+  		created_at DESC
+	</select>
+	
+	<!--  게시글 list -->
+	<select id="listMyArticle" parameterType="string" resultMap="board">
+		select *
+		from board
+		where user_id = #{userId}
+		ORDER BY created_at DESC
 	</select>
 	
 	<!--  총 게시글 수 조회 -->

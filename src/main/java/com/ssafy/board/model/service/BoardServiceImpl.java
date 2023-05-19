@@ -35,6 +35,11 @@ public class BoardServiceImpl implements BoardService {
 	}
 	
 	@Override
+	public List<BoardDto> listMyArticle(String userId) throws Exception {
+		return boardMapper.listMyArticle(userId);
+	}
+	
+	@Override
 	public PageNavigation makePageNavigation(Map<String, String> map) throws Exception {
 		PageNavigation pageNavigation = new PageNavigation();
 

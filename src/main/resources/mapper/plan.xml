@@ -54,9 +54,16 @@
 		<where>
 			<include refid="search"></include>
 		</where>
-		order by created_at desc;
+		order by created_at desc
 	</select>
 	
+	<!-- 내가 작성한 여행 경로 리스트 출력 -->
+	<select id="listMyPlan" parameterType="string" resultMap="plan">
+		select *
+		from plan
+		where user_id = #{userId}
+		order by created_at desc
+	</select>
 	
 	<!-- 글 번호에 맞는 여행 경로 출력 -->
 	<select id="selectPlanOne" parameterType="int" resultMap="plan">

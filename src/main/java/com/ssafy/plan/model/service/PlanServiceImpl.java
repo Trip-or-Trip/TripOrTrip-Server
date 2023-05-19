@@ -52,6 +52,11 @@ public class PlanServiceImpl implements PlanService {
 		boardParameterDto.setStart(start);
 		return planMapper.listPlan(boardParameterDto);
 	}
+	
+	@Override
+	public List<PlanDto> listMyPlan(String userId) throws SQLException {
+		return planMapper.listMyPlan(userId);
+	}
 
 	@Override
 	public PlanDto selectPlanOne(int articleNo) throws SQLException {

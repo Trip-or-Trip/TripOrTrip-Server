@@ -70,6 +70,8 @@ public class HotplaceController {
 		logger.debug("hotplace list:" + userId);
 		try {
 			List<HotplaceDto> list = hotplaceService.listHotplace();
+			userId = userId.substring(1, userId.length()-1);
+			
 			List<LikeDto> listLike = hotplaceService.listLike(userId); // 해당 사용자가 좋아요 누른 list 반환(listLike에는 hotplace 번호가 담긴다)
 			
 			if(listLike.size() == 0 ) return new ResponseEntity<List<HotplaceDto>>(list, HttpStatus.OK);

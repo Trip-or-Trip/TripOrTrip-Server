@@ -13,7 +13,9 @@ public class HotplaceDto {
 	private double longitude;
 	private String mapUrl;
 	private boolean like = false;
+	private int likeCnt;
 	
+	public HotplaceDto() {}
 	
 	public HotplaceDto(String userId, String title, String joinDate, String desc, String tag1,
 			String tag2, double latitude, double longitude, String mapUrl) {
@@ -28,6 +30,18 @@ public class HotplaceDto {
 		this.longitude = longitude;
 		this.mapUrl = mapUrl;
 	}
+	
+	
+	public int getLikeCnt() {
+		return likeCnt;
+	}
+
+
+	public void setLikeCnt(int likeCnt) {
+		this.likeCnt = likeCnt;
+	}
+
+
 	public boolean getLike() {
 		return like;
 	}
@@ -70,16 +84,16 @@ public class HotplaceDto {
 	public void setDesc(String desc) {
 		this.desc = desc;
 	}
-	public String getTag1() {
+	public String gettag1() {
 		return tag1;
 	}
-	public void setTag1(String tag1) {
+	public void settag1(String tag1) {
 		this.tag1 = tag1;
 	}
-	public String getTag2() {
+	public String gettag2() {
 		return tag2;
 	}
-	public void setTag2(String tag2) {
+	public void settag2(String tag2) {
 		this.tag2 = tag2;
 	}
 	public double getLatitude() {
