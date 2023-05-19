@@ -17,8 +17,10 @@
 		<result column="map_url" property="mapUrl"></result>
 	</resultMap>
 	
-	<resultMap type="int" id="like">
+	<resultMap type="likeDto" id="like">
 		<result column="hotplace_id" property="hotplaceId"></result>
+		<result column="id" property="id"></result>
+		<result column="user_id" property="userId"></result>
 	</resultMap>
 	
 	<select id="listHotplace" resultMap="hotplace">
@@ -74,10 +76,10 @@
 		where num = #{num}
 	</delete>
 	
-	<select id="listLike" parameterType="string" resultType="java.util.List">
-		select hotplace_id
+	<select id="listLike" parameterType="String" resultMap="like">
+		select id, hotplace_id, user_id 
 		from `like`
-		where user_id = #{userId}
+		where user_id = #{num}
 	</select>
 	
 </mapper>

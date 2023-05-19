@@ -3,9 +3,7 @@ package com.ssafy.hotplace.controller;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -19,7 +17,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,6 +33,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ssafy.hotplace.model.HotplaceDto;
 import com.ssafy.hotplace.model.service.HotplaceService;
+import com.ssafy.like.model.LikeDto;
 import com.ssafy.user.model.UserDto;
 
 import io.swagger.annotations.Api;
@@ -72,12 +70,13 @@ public class HotplaceController {
 		logger.debug("hotplace list:" + userId);
 		try {
 			List<HotplaceDto> list = hotplaceService.listHotplace();
-			List<Integer> listLike = hotplaceService.listLike(userId); // 해당 사용자가 좋아요 누른 list 반환(listLike에는 hotplace 번호가 담긴다)
-			for(Integer i : listLike) System.out.println(i);
+			List<LikeDto> listLike = hotplaceService.listLike(userId); // 해당 사용자가 좋아요 누른 list 반환(listLike에는 hotplace 번호가 담긴다)
+			
 			if(listLike.size() == 0 ) return new ResponseEntity<List<HotplaceDto>>(list, HttpStatus.OK);
+			
 			for(HotplaceDto hotplace : list) { // 모든 목록(DB)에 대해
-				for(Integer hotplaceId : listLike) { // 사용자의 모든 좋아요 목록(DB)을 보면서 
-					if(hotplace.getNum() == hotplaceId) { // 같다면(좋아요를 누른 글이라면)
+				for(LikeDto likes : listLike) { // 사용자의 모든 좋아요 목록(DB)을 보면서 
+					if(hotplace.getNum() == likes.getHotplaceId()) { // 같다면(좋아요를 누른 글이라면)
 						hotplace.setLike(true); // 해당 게시글 좋아요 처리(Dto)
 						break; // 탈출
 					}

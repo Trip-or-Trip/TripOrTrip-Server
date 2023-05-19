@@ -1,7 +1,6 @@
 package com.ssafy.hotplace.model.service;
 
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -10,8 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.ssafy.hotplace.model.HotplaceDto;
 import com.ssafy.hotplace.model.mapper.HotplaceMapper;
-import com.ssafy.util.PageNavigation;
-import com.ssafy.util.SizeConstant;
+import com.ssafy.like.model.LikeDto;
 
 @Service
 public class HotplaceServiceImpl implements HotplaceService {
@@ -114,7 +112,7 @@ public class HotplaceServiceImpl implements HotplaceService {
 	}
 
 	@Override
-	public List<Integer> listLike(String userId) throws SQLException {
+	public List<LikeDto> listLike(String userId) throws SQLException {
 		return hotplaceMapper.listLike(userId);
 	}
 	

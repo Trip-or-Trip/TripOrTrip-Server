@@ -7,6 +7,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.ssafy.hotplace.model.HotplaceDto;
+import com.ssafy.like.model.LikeDto;
 
 @Mapper
 public interface HotplaceMapper {
@@ -28,5 +29,5 @@ public interface HotplaceMapper {
 	int insertLike(Map<String, String> map) throws Exception;
 	int deleteLike(Map<String, String> map) throws Exception;
 	
-	List<Integer> listLike(String userId) throws SQLException;
+	List<LikeDto> listLike(String num) throws SQLException;
 }

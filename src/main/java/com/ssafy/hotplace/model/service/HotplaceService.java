@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.ssafy.hotplace.model.HotplaceDto;
-import com.ssafy.util.PageNavigation;
+import com.ssafy.like.model.LikeDto;
 
 public interface HotplaceService {
 //	List<HotplaceDto> listHotplace(Map<String, String> map) throws Exception;
@@ -26,6 +26,6 @@ public interface HotplaceService {
 	int insertLike(Map<String, String> map) throws Exception;
 	int deleteLike(Map<String, String> map) throws Exception;
 
-	List<Integer> listLike(String userId) throws SQLException;
+	List<LikeDto> listLike(String userId) throws SQLException;
 	
 }
