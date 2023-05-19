@@ -14,7 +14,7 @@ import com.ssafy.jwt.JwtService;
 
 @Component
 public class JwtInterceptor implements HandlerInterceptor {
-    private static final String HEADER_AUTH = "Authorization";
+    private static final String HEADER_AUTH = "X-ACCESS-TOKEN";
 
     @Autowired
     private JwtService jwtService;

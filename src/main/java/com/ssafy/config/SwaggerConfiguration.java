@@ -68,6 +68,11 @@ public class SwaggerConfiguration {
 	public Docket hotplaceApi() {
 		return getDocket("핫플레이스", Predicates.or(PathSelectors.regex("/hotplace.*")));
 	}
+	
+	@Bean
+	public Docket mypageApi() {
+		return getDocket("마이페이지", Predicates.or(PathSelectors.regex("/mypage.*")));
+	}
 
 	public Docket getDocket(String groupName, Predicate<String> predicate) {
 		// List<ResponseMessage> responseMessages = new ArrayList<ResponseMessage>();

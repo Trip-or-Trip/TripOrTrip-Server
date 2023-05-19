@@ -20,10 +20,7 @@ import com.ssafy.interceptor.JwtInterceptor;
 @MapperScan(basePackages = {"com.ssafy.**.mapper"})
 @EnableWebMvc
 public class WebMvcConfiguration implements WebMvcConfigurer{
-//	private final List<String> patterns = Arrays.asList("/hotplace/**", "/plan/**", "/board/**");
-//	private final List<String> excludePatterns = Arrays.asList("/hotplace/list", "/hotplace/image/**", "/plan/mvplanlist", "/board/list", "/board/view");
-//	private final List<String> patterns = Arrays.asList("/board/**", "/hotplace/**", "/notice/**", "/plan/**");
-	private final List<String> patterns = Arrays.asList("board/**", "hotplace/**", "notice/**", "plan/**");
+	private final List<String> patterns = Arrays.asList("/board/**", "/hotplace/**", "/notice/**", "/plan/**", "/mypage/**");
 	private final List<String> excludePatterns = Arrays.asList("/board/list", "/hotplace/list", "/notice/list", "/plan/list");
 	
 	private ConfirmInterceptor confirmInterceptor;
@@ -44,7 +41,6 @@ public class WebMvcConfiguration implements WebMvcConfigurer{
 
 	@Override
 	public void addCorsMappings(CorsRegistry registry) {
-//		System.out.println("CORS Setting");
 //		default 설정.
 //		Allow all origins.
 //		Allow "simple" methods GET, HEAD and POST.
@@ -56,7 +52,7 @@ public class WebMvcConfiguration implements WebMvcConfigurer{
 					HttpMethod.DELETE.name(), HttpMethod.HEAD.name(), HttpMethod.OPTIONS.name(),
 					HttpMethod.PATCH.name())
 //			.allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH", "HEAD")
-			.exposedHeaders("Authorization")
+			.exposedHeaders("X-ACCESS-TOKEN")
 			.maxAge(1800);
 	}
 
