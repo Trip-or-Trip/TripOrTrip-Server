@@ -28,7 +28,7 @@
 		from hotplace
 	</select>
 	
-	<select id="listHotplace" parameterType="string" resultMap="hotplace">
+	<select id="listMyHotplace" parameterType="string" resultMap="hotplace">
 		select num, user_id, image, title, join_date, `desc`, tag1, tag2, latitude, longitude, map_url
 		from hotplace
 		where user_id = #{userId}
