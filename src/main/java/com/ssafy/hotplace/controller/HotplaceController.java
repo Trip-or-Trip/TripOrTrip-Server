@@ -92,10 +92,33 @@ public class HotplaceController {
 	@ApiOperation(value = "핫플레이스 등록", notes = "핫플레이스를 등록한다.", response = Integer.class)
 	@PostMapping("")
 	@Transactional
-	public ResponseEntity<?> insert(@RequestBody HotplaceDto hotplaceDto, @RequestParam("hotplace-image") MultipartFile file, HttpSession session) {
-		UserDto userDto = (UserDto) session.getAttribute("userinfo");
-		hotplaceDto.setUserId(userDto.getId());
-		
+	/**
+	 *  formData.append("userId", this.user.id);
+	 *  formData.append("title", this.place.title);
+	 *  formData.append("joinData", this.place.joinDate);
+	 *  formData.append("desc", this.place.desc);
+	 *  formData.append("tag1", this.place.tag1);
+	 *  formData.append("tag2", this.place.tag2);
+	 *  formData.append("latitude", this.place.latitude);
+	 *  formData.append("longitude", this.place.longitude);
+	 *  formData.append("mapUrl", this.place.mapUrl);
+	 *  formData.append("image", file.files[0]);
+	 * @return
+	 */
+//	public ResponseEntity<?> insert(@RequestBody HotplaceDto hotplaceDto, @RequestParam("hotplace-image") MultipartFile file, HttpSession session) {
+	public ResponseEntity<?> insert( 
+			@RequestParam("userId") String userId,
+			@RequestParam("title") String title,
+			@RequestParam("joinDate") String joinDate,
+			@RequestParam("desc") String desc,
+			@RequestParam("tag1") String tag1,
+			@RequestParam("tag2") String tag2,
+			@RequestParam("latitude") double latitude,
+			@RequestParam("longitude") double longitude,
+			@RequestParam("mapUrl") String mapUrl,
+			@RequestParam("image") MultipartFile file
+			) {
+		HotplaceDto hotplaceDto = new HotplaceDto(userId, title, joinDate, desc, tag1, tag2, latitude, longitude, mapUrl);
 		logger.debug("write hotplaceDto : {}", hotplaceDto);
 		logger.debug("MultipartFile.isEmpty : {}", file.isEmpty());
 		

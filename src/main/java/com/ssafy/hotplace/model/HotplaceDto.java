@@ -14,6 +14,20 @@ public class HotplaceDto {
 	private String mapUrl;
 	private boolean like = false;
 	
+	
+	public HotplaceDto(String userId, String title, String joinDate, String desc, String tag1,
+			String tag2, double latitude, double longitude, String mapUrl) {
+		super();
+		this.userId = userId;
+		this.title = title;
+		this.joinDate = joinDate;
+		this.desc = desc;
+		this.tag1 = tag1;
+		this.tag2 = tag2;
+		this.latitude = latitude;
+		this.longitude = longitude;
+		this.mapUrl = mapUrl;
+	}
 	public boolean getLike() {
 		return like;
 	}

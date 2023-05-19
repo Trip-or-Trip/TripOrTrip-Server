@@ -36,6 +36,11 @@ public class HotplaceServiceImpl implements HotplaceService {
 	public List<HotplaceDto> listHotplace() throws SQLException {
 		return hotplaceMapper.listHotplace();
 	}
+	
+	@Override
+	public List<HotplaceDto> listMyHotplace(String userId) throws SQLException {
+		return hotplaceMapper.listMyHotplace(userId);
+	}
 
 //	@Override
 //	public PageNavigation makePageNavigation(Map<String, String> map) throws Exception {

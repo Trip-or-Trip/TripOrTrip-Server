@@ -28,6 +28,12 @@
 		from hotplace
 	</select>
 	
+	<select id="listHotplace" parameterType="string" resultMap="hotplace">
+		select num, user_id, image, title, join_date, `desc`, tag1, tag2, latitude, longitude, map_url
+		from hotplace
+		where user_id = #{userId}
+	</select>
+	
 	<insert id="insertHotplace" parameterType="hotplaceDto">
 		insert into hotplace (user_id, image, title, join_date, `desc`, tag1, tag2, latitude, longitude, map_url)
 		values (#{userId}, #{image}, #{title}, #{joinDate}, #{desc}, #{tag1}, #{tag2}, #{latitude}, #{longitude}, #{mapUrl})
