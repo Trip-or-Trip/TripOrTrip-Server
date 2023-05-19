@@ -200,7 +200,6 @@ public class HotplaceController {
 		System.out.println(map.toString());
 		try {
 			if(hotplaceService.deleteLike(map) > 0) { // 만약 지웠는데 성공했다면
-				System.out.println("helloword111");
 				hotplaceService.minusLikeCnt(map.get("num")); // 좋아요 수 감소시키고,
 				return new ResponseEntity<String>(SUCCESS, HttpStatus.OK); // return
 			}else { // 좋아요가 등록 안되어 있었던 거니깐
