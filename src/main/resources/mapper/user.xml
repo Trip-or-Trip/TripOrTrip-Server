@@ -11,6 +11,7 @@
 		<result column="email_id" property="emailId"/>
 		<result column="email_domain" property="emailDomain"/>
 		<result column="grade" property="grade"/>
+		<result column="image" property="image" />
 	</resultMap>
 	
 	<select id="signinUser" parameterType="string" resultMap="user">
@@ -34,8 +35,8 @@
 		where id = #{id}
 	</update>
 	
-	<select id="findUserById" parameterType="string" resultType="userDto">
-		select id, name, email_id emailId, email_domain emailDomain, grade
+	<select id="findUserById" parameterType="string" resultMap="user">
+		select *
 		from user
 		where id = #{id}
 	</select>

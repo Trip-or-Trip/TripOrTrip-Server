@@ -18,11 +18,12 @@ CREATE TABLE `user` (
   `email_id` varchar(20) NOT NULL,
   `email_domain` varchar(25) NOT NULL,
   `grade` varchar(20) NOT NULL DEFAULT '일반 회원',
+  `image` VARCHAR(300) NULL DEFAULT '',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-insert into user values ('admin', '1234', '관리자', 'admin', 'ssafy.com', '관리자');
-insert into user values ('ssafy', '1234', '김싸피', 'ssafy', 'ssafy.com', '일반 회원');
+insert into user (id, password, name, email_id, email_domain, grade) values ('admin', '1234', '관리자', 'admin', 'ssafy.com', '관리자');
+insert into user (id, password, name, email_id, email_domain, grade) values ('ssafy', '1234', '김싸피', 'ssafy', 'ssafy.com', '일반 회원');
 
 
 -- 핫플레이스 테이블

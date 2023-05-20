@@ -7,6 +7,7 @@ public class UserDto {
 	private String emailId;
 	private String emailDomain;
 	private String grade;
+	private String image;
 	
 	public String getId() {
 		return id;
@@ -43,7 +44,14 @@ public class UserDto {
 	}
 	public void setGrade(String grade) {
 		this.grade = grade;
+	}	
+	public String getImage() {
+		return image;
 	}
+	public void setImage(String image) {
+		this.image = image;
+	}
+	
 	
 	@Override
 	public String toString() {
@@ -60,6 +68,8 @@ public class UserDto {
 		builder.append(emailDomain);
 		builder.append(", grade=");
 		builder.append(grade);
+		builder.append(", image=");
+		builder.append(image);
 		builder.append("]");
 		return builder.toString();
 	}
