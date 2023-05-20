@@ -158,13 +158,24 @@ public class HotplaceController {
 	}
 	
 	@ApiOperation(value = "핫플레이스 수정", notes = "핫플레이스를 수정한다.", response = Integer.class)
-	@PutMapping("/{num}")
+	@PostMapping("/{num}")
 	@Transactional
-	public ResponseEntity<?> update(HotplaceDto hotplaceDto, @RequestParam("hotplace-update-image") MultipartFile file, HttpSession session, RedirectAttributes redirectAttributes) throws SQLException, IllegalStateException, IOException {
-		UserDto userDto = (UserDto) session.getAttribute("userinfo");
-		hotplaceDto.setUserId(userDto.getId());
-		
-		logger.debug("write hotplaceDto : {}", hotplaceDto);
+	public ResponseEntity<?> update(
+			@PathVariable("num") int num,
+			@RequestParam("userId") String userId,
+			@RequestParam("title") String title,
+			@RequestParam("joinDate") String joinDate,
+			@RequestParam("desc") String desc,
+			@RequestParam("tag1") String tag1,
+			@RequestParam("tag2") String tag2,
+			@RequestParam("latitude") double latitude,
+			@RequestParam("longitude") double longitude,
+			@RequestParam("mapUrl") String mapUrl,
+			@RequestParam("image") MultipartFile file
+	) throws SQLException, IllegalStateException, IOException {
+		HotplaceDto hotplaceDto = new HotplaceDto(userId, title, joinDate, desc, tag1, tag2, latitude, longitude, mapUrl);
+		hotplaceDto.setNum(num);
+		logger.debug("update hotplaceDto : {}", hotplaceDto);
 		logger.debug("MultipartFile.isEmpty : {}", file.isEmpty());
 		
 		if(!file.isEmpty()) {
