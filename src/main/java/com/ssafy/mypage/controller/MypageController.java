@@ -118,6 +118,9 @@ public class MypageController {
 		userId = userId.substring(1, userId.length()-1);
 		try {
 			List<HotplaceDto> list = hotplaceService.listMyHotplace(userId);
+			System.out.println("helloworld!!!!!!!!!!!!!!!!!!!!!!");
+			for(HotplaceDto h : list)
+				System.out.println(h.toString());
 			return new ResponseEntity<List<HotplaceDto>>(list, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
