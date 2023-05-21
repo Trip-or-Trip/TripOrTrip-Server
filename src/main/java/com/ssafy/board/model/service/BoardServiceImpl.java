@@ -91,13 +91,16 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public void modifyArticle(BoardDto boardDto) throws Exception {
 		boardMapper.modifyArticle(boardDto);
-		
 	}
 
 	@Override
 	public void deleteArticle(int articleNo) throws Exception {
 		boardMapper.deleteArticle(articleNo);
-		
+	}
+
+	@Override
+	public void deleteComment(int articleNo) throws Exception {
+		boardMapper.deleteComment(articleNo);
 	}
 
 }

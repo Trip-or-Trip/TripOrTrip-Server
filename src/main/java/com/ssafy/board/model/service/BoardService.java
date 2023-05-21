@@ -21,5 +21,5 @@ public interface BoardService {
 	
 	void modifyArticle(BoardDto boardDto) throws Exception;
 	void deleteArticle(int articleNo) throws Exception;
-	
+	void deleteComment(int articleNo) throws Exception;
 }

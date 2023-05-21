@@ -118,6 +118,18 @@ public class BoardController {
 		}
 	}
 	
+	@ApiOperation(value = "게시판 댓글 삭제", notes = "글번호에 해당하는 게시글의 댓글을 삭제한다. 그리고 DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
+	@DeleteMapping("/deletecomment/{articleno}")
+	private ResponseEntity<?> deleteCommnet(@PathVariable("articleno") @ApiParam(value = "작성할 글의 글번호.", required = true) int articleNo) {
+		try {
+			logger.info("BoardController:: deleteComment - 호출 : " + articleNo);
+			boardService.deleteComment(articleNo);
+			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK); 
+		} catch (Exception e) {
+			return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
+		}
+	}
+	
 	@ApiOperation(value = "게시판 글작성", notes = "새로운 게시글 정보를 입력한다. 그리고 DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
 	@PostMapping("/write")
 	private ResponseEntity<?> writeArticle(@RequestBody @ApiParam(value = "게시글 정보.", required = true) BoardDto boardDto){
@@ -146,7 +158,7 @@ public class BoardController {
 
 	@ApiOperation(value = "게시판 글삭제", notes = "글번호에 해당하는 게시글의 정보를 삭제한다. 그리고 DB삭제 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
 	@DeleteMapping("/{articleno}")
-	private ResponseEntity<String> deleteArticle(@PathVariable("articleno") @ApiParam(value = "살제할 글의 글번호.", required = true) int articleNo) {
+	private ResponseEntity<String> deleteArticle(@RequestBody  @PathVariable("articleno") @ApiParam(value = "살제할 글의 글번호.", required = true) int articleNo) {
 		try {
 			boardService.deleteArticle(articleNo);
 			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
