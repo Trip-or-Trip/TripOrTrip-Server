@@ -37,6 +37,12 @@
 		values (#{userId}, #{title}, #{content})
 	</insert>
 	
+	<!-- 댓글 작성 -->
+	<insert id="writeComment" parameterType="commentDto">
+		insert into comment(user_id, content, board_id) 
+		values (#{userId}, #{content}, #{boardId})
+	</insert>
+	
 	<!--  게시글 list -->
 	<select id="listArticle" parameterType="map" resultMap="board">
 		select *

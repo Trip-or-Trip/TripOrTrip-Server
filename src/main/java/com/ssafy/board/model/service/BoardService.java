@@ -11,6 +11,7 @@ import com.ssafy.util.PageNavigation;
 public interface BoardService {
 
 	void writeArticle(BoardDto boardDto) throws Exception;
+	void writeComment(CommentDto commentDto) throws Exception;
 	List<BoardDto> listArticle(BoardParameterDto boardParameterDto) throws Exception;
 	List<CommentDto> getComment(int articleNo) throws Exception;
 	List<BoardDto> listMyArticle(String userId) throws Exception;

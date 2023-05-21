@@ -14,6 +14,7 @@ import com.ssafy.comment.model.CommentDto;
 public interface BoardMapper {
 
 	void writeArticle(BoardDto boardDto) throws SQLException;
+	void writeComment(CommentDto commentDto) throws SQLException;
 	List<BoardDto> listArticle(BoardParameterDto boardParameterDto) throws SQLException;
 	List<CommentDto> getComment(int articleNo) throws SQLException;
 	List<BoardDto> listMyArticle(String userId) throws SQLException;

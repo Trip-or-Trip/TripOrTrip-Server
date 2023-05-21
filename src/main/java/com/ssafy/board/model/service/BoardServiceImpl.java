@@ -27,6 +27,11 @@ public class BoardServiceImpl implements BoardService {
 	public void writeArticle(BoardDto boardDto) throws Exception {
 		boardMapper.writeArticle(boardDto);
 	}
+	
+	@Override
+	public void writeComment (CommentDto commentDto) throws Exception {
+		boardMapper.writeComment(commentDto);
+	}
 
 	@Override
 	public List<BoardDto> listArticle(BoardParameterDto boardParameterDto) throws Exception {
