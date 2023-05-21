@@ -12,6 +12,14 @@
 		<result column="hit" property="hit" />
 	</resultMap>
 	
+	<resultMap type="commentDto" id="comment">
+		<result column="id" property="id" />
+		<result column="content" property="content" />
+		<result column="created_at" property="createdAt" />
+		<result column="board_id" property="boardId" />
+		<result column="user_id" property="userId" />
+	</resultMap>
+	
 	<sql id="search">
 		<if test="word != null and word != ''">
 			<if test="key == 'title'">
@@ -43,6 +51,14 @@
 		  ELSE 1 
 		END ASC, 
   		created_at DESC
+	</select>
+	
+	<!--  댓글  list -->
+	<select id="getComment" parameterType="int" resultMap="comment">
+		select *
+		from comment
+		where board_id = #{articleNo}
+		ORDER BY created_at DESC
 	</select>
 	
 	<!--  게시글 list -->

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.ssafy.board.model.BoardDto;
 import com.ssafy.board.model.BoardParameterDto;
 import com.ssafy.board.model.mapper.BoardMapper;
+import com.ssafy.comment.model.CommentDto;
 import com.ssafy.util.PageNavigation;
 import com.ssafy.util.SizeConstant;
 
@@ -32,6 +33,10 @@ public class BoardServiceImpl implements BoardService {
 		int start = boardParameterDto.getPg() == 0 ? 0 : (boardParameterDto.getPg() - 1) * boardParameterDto.getSpp();
 		boardParameterDto.setStart(start);
 		return boardMapper.listArticle(boardParameterDto);
+	}
+	@Override
+	public List<CommentDto> getComment(int articleNo) throws Exception {
+		return boardMapper.getComment(articleNo);
 	}
 	
 	@Override

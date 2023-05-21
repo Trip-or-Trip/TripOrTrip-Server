@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ssafy.board.model.BoardDto;
 import com.ssafy.board.model.BoardParameterDto;
 import com.ssafy.board.model.service.BoardService;
+import com.ssafy.comment.model.CommentDto;
 import com.ssafy.user.model.UserDto;
 
 import io.swagger.annotations.ApiOperation;
@@ -63,7 +64,7 @@ public class BoardController {
 	private ResponseEntity<?> listKeywordArticle(@ApiParam(value = "게시글을 얻기위한 부가정보.", required = true) @RequestBody BoardParameterDto boardParameterDto) {
 		logger.debug("boardList call");
 		try {
-			System.out.println(boardParameterDto.toString());
+//			System.out.println(boardParameterDto.toString());
 			List<BoardDto> list = boardService.listArticle(boardParameterDto);
 			return new ResponseEntity<List<BoardDto>>(list, HttpStatus.OK);
 		} catch (Exception e) {
@@ -73,7 +74,7 @@ public class BoardController {
 	
 	@ApiOperation(value = "게시판 글보기", notes = "글번호에 해당하는 게시글의 정보를 반환한다.", response = BoardDto.class)
 	@GetMapping("/{articleno}")
-	private ResponseEntity<?> getArticle(@PathVariable("articleno") @ApiParam(value = "얻어올 글의 글번호.", required = true) int articleNo, @RequestParam Map<String, String> map) {
+	private ResponseEntity<?> getArticle(@PathVariable("articleno") @ApiParam(value = "얻어올 글의 글번호.", required = true) int articleNo) {
 		try {
 			logger.info("getArticle - 호출 : " + articleNo);
 			BoardDto boardDto = boardService.getArticle(articleNo);
@@ -88,9 +89,26 @@ public class BoardController {
 		}
 	}
 	
+	@ApiOperation(value = "게시판 댓글 보기", notes = "글번호에 해당하는 게시글의 댓글 정보를 반환한다.", response = List.class)
+	@PostMapping("/comment")
+	private ResponseEntity<?> getCommnet(@RequestBody @ApiParam(value = "얻어올 글의 글번호.", required = true) String articleNo) {
+		try {
+			logger.info("BoardController:: getComment - 호출 : " + articleNo);
+			int num = Integer.parseInt(articleNo);
+			List<CommentDto> list = boardService.getComment(num);
+			if(list != null) {
+				return new ResponseEntity<List<CommentDto>>(list, HttpStatus.OK); 
+			}else {
+				return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+			}
+		} catch (Exception e) {
+			return exceptionHandling(e);
+		}
+	}
+	
 	@ApiOperation(value = "게시판 글작성", notes = "새로운 게시글 정보를 입력한다. 그리고 DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
 	@PostMapping("/write")
-	private ResponseEntity<?> writeArticle(@RequestBody @ApiParam(value = "게시글 정보.", required = true) BoardDto boardDto, HttpSession session){
+	private ResponseEntity<?> writeArticle(@RequestBody @ApiParam(value = "게시글 정보.", required = true) BoardDto boardDto){
 		logger.debug("BoardController: writeAricle - 호출");
 //		UserDto userDto = (UserDto) session.getAttribute("userinfo");
 //		boardDto.setUserId(userDto.getId());
