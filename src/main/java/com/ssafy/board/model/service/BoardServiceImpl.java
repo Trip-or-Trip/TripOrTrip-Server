@@ -103,4 +103,9 @@ public class BoardServiceImpl implements BoardService {
 		boardMapper.deleteComment(articleNo);
 	}
 
+	@Override
+	public List<CommentDto> getCommentList(String userId) throws Exception {
+		return boardMapper.getCommentList(userId);
+	}
+
 }

@@ -105,6 +105,23 @@ public class BoardController {
 		}
 	}
 	
+	@ApiOperation(value = "내가쓴 댓글 보기", notes = "내가 쓴 댓글 정보를 반환한다.", response = List.class)
+	@PostMapping("/comment")
+	private ResponseEntity<?> getCommnetList(@RequestBody @ApiParam(value = "얻어올 사용자 ID", required = true) String userId) {
+		try {
+			logger.info("BoardController:: getCommentList - 호출 : " + userId);
+			userId = userId.substring(1,  userId.length()-1);
+			List<CommentDto> list = boardService.getCommentList(userId);
+			if(list != null) {
+				return new ResponseEntity<List<CommentDto>>(list, HttpStatus.OK); 
+			}else {
+				return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+			}
+		} catch (Exception e) {
+			return exceptionHandling(e);
+		}
+	}
+	
 	@ApiOperation(value = "게시판 댓글 쓰기", notes = "글번호에 해당하는 게시글의 댓글을 작성한다. 그리고 DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
 	@PostMapping("/writecomment/{articleno}")
 	private ResponseEntity<?> writeCommnet(@PathVariable("articleno") @ApiParam(value = "작성할 글의 글번호.", required = true) int articleNo, @RequestBody CommentDto comment) {

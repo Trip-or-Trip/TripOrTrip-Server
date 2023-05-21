@@ -67,6 +67,14 @@
 		ORDER BY created_at DESC
 	</select>
 	
+	<!-- 내가쓴 댓글  list -->
+	<select id="getCommentList" parameterType="string" resultMap="comment">
+		select *
+		from comment
+		where user_id = #{userId}
+		ORDER BY created_at DESC
+	</select>
+	
 	<!--  게시글 list -->
 	<select id="listMyArticle" parameterType="string" resultMap="board">
 		select *

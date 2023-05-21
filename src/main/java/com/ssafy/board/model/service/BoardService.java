@@ -14,6 +14,7 @@ public interface BoardService {
 	void writeComment(CommentDto commentDto) throws Exception;
 	List<BoardDto> listArticle(BoardParameterDto boardParameterDto) throws Exception;
 	List<CommentDto> getComment(int articleNo) throws Exception;
+	List<CommentDto> getCommentList(String userId) throws Exception;
 	List<BoardDto> listMyArticle(String userId) throws Exception;
 	PageNavigation makePageNavigation(Map<String, String> map) throws Exception;
 	BoardDto getArticle(int articleNo) throws Exception;
