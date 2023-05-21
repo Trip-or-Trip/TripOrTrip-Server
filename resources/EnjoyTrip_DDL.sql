@@ -18,12 +18,11 @@ CREATE TABLE `user` (
   `email_id` varchar(20) NOT NULL,
   `email_domain` varchar(25) NOT NULL,
   `grade` varchar(20) NOT NULL DEFAULT '일반 회원',
-  `image` VARCHAR(300) NULL DEFAULT '',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-insert into user (id, password, name, email_id, email_domain, grade) values ('admin', '1234', '관리자', 'admin', 'ssafy.com', '관리자');
-insert into user (id, password, name, email_id, email_domain, grade) values ('ssafy', '1234', '김싸피', 'ssafy', 'ssafy.com', '일반 회원');
+insert into user values ('admin', '1234', '관리자', 'admin', 'ssafy.com', '관리자');
+insert into user values ('ssafy', '1234', '김싸피', 'ssafy', 'ssafy.com', '일반 회원');
 
 
 -- 핫플레이스 테이블
@@ -81,15 +80,15 @@ CREATE TABLE `place` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
--- 여행 계획 댓글 테이블
+-- 게시판 댓글 테이블
 CREATE TABLE `comment` (
 	`id` INT NOT NULL AUTO_INCREMENT,
     `content` VARCHAR(500) NOT NULL,
     `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `plan_id` INT NOT NULL,
+    `board_id` INT NOT NULL,
     `user_id` VARCHAR(20) NOT NULL,
     PRIMARY KEY(`id`),
-    FOREIGN KEY(`plan_id`) REFERENCES `plan` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY(`board_id`) REFERENCES `board` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY(`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
