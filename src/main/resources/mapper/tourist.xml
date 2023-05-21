@@ -34,7 +34,10 @@
 	
 	<select id="listTourist" parameterType="map" resultMap="attraction">
 		select * from attraction_info
-		where sido_code = #{sidoCode} and gugun_code = #{gugunCode} and content_type_id = #{contentTypeId}
+		where sido_code = #{sidoCode} and gugun_code = #{gugunCode} and content_type_id in
+			<foreach collection="contentTypeIdList" item="contentTypeId" open="(" close=")" separator=",">
+				#{contentTypeId}
+			</foreach>
 	</select>
 	
 	<select id="listSido" resultMap="sido">

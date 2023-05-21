@@ -15,7 +15,7 @@ public interface TouristService {
     List<GugunDto> listGugun(String sidoCode) throws SQLException;
     
 	/** sido_code와 gugun_code로 관광지 리스트 불러오는 메소드 */
-	List<AttractionInfoDto> listTourist(Map<String, String> param) throws SQLException;
+	List<AttractionInfoDto> listTourist(Map<String, Object> param) throws SQLException;
 //	List<AttractionInfoDto> listTourist(int sidoCode, int gugunCode, int contentTypeId) throws SQLException;
 	
 	String getImageUrl(int id) throws SQLException;

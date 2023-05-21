@@ -5,6 +5,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -79,15 +80,15 @@ public class TouristController {
     	return new ResponseEntity<List<GugunDto>>(list, HttpStatus.OK);
     }
     
-    @GetMapping("/{sidoCode}/{gugunCode}/{contentTypeId}")
+    @GetMapping("/{sidoCode}/{gugunCode}/{contentTypeIdList}")
     @ResponseBody
-    public ResponseEntity<?> search(@PathVariable("sidoCode") String sidoCode, @PathVariable("gugunCode") String gugunCode, @PathVariable("contentTypeId") String contentTypeId) throws SQLException {
-    	logger.debug("search attraction : {}, {}, {}", sidoCode, gugunCode, contentTypeId);
+    public ResponseEntity<?> search(@PathVariable("sidoCode") String sidoCode, @PathVariable("gugunCode") String gugunCode, @PathVariable("contentTypeIdList") String contentTypeIdList) throws SQLException {
+    	logger.debug("search attraction : {}, {}, {}", sidoCode, gugunCode, contentTypeIdList.split(","));
     	
-    	Map<String, String> param = new HashMap<String, String>();
+    	Map<String, Object> param = new HashMap<String, Object>();
     	param.put("sidoCode", sidoCode);
     	param.put("gugunCode", gugunCode);
-    	param.put("contentTypeId", contentTypeId);
+    	param.put("contentTypeIdList", Arrays.asList(contentTypeIdList.split(",")));
     	
     	List<AttractionInfoDto> list = touristService.listTourist(param);
     	return new ResponseEntity<List<AttractionInfoDto>>(list, HttpStatus.OK);

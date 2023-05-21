@@ -22,7 +22,7 @@ public class TouristServiceImpl implements TouristService {
 	}
 
 	@Override
-	public List<AttractionInfoDto> listTourist(Map<String, String> param) throws SQLException {
+	public List<AttractionInfoDto> listTourist(Map<String, Object> param) throws SQLException {
 		return touristMapper.listTourist(param);
 	}
 
