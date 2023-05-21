@@ -18,4 +18,6 @@ public interface UserService {
 	MailDto createMailAndChangePassword(String id, String emailId, String emailDomain) throws SQLException;
 	String getTempPassword();
 	void sendEmail(MailDto mailDto);
+	
+	int uploadProfile(String userId, String saveFileName) throws SQLException;
 }

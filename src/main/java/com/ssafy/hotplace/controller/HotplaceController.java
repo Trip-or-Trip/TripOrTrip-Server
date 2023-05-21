@@ -221,6 +221,7 @@ public class HotplaceController {
 			}
 
 		}catch(Exception e) {
+			e.printStackTrace();
 			return new ResponseEntity<String>(FAIL, HttpStatus.OK);
 		}
 	}

@@ -18,4 +18,6 @@ public interface UserMapper {
 	
 	UserDto findUser(String id, String emailId, String emailDomain) throws SQLException;
 	int updatePassword(String id, String tempPassword) throws SQLException;
+	
+	int uploadProfile(String userId, String saveFileName) throws SQLException;
 }

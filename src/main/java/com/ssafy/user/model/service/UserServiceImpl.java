@@ -109,4 +109,9 @@ public class UserServiceImpl implements UserService {
         mailSender.send(message);
 	}
 
+	@Override
+	public int uploadProfile(String userId, String saveFileName) throws SQLException {
+		return userMapper.uploadProfile(userId, saveFileName);
+	}
+
 }

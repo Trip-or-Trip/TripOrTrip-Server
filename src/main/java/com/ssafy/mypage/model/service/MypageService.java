@@ -1,5 +1,6 @@
 package com.ssafy.mypage.model.service;
 
-public interface MypageService {
+import java.sql.SQLException;
 
+public interface MypageService {
 }

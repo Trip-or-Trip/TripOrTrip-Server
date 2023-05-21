@@ -61,4 +61,10 @@
 		set password = #{tempPassword}
 		where id = #{id}
 	</update>
+	
+	<update id="uploadProfile" parameterType="string">
+		update user
+		set image = #{saveFileName}
+		where id = #{userId}
+	</update>
 </mapper>
