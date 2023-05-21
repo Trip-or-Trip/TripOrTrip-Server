@@ -73,8 +73,8 @@ public class BoardController {
 	}
 	
 	@ApiOperation(value = "게시판 글보기", notes = "글번호에 해당하는 게시글의 정보를 반환한다.", response = BoardDto.class)
-	@GetMapping("/{articleno}")
-	private ResponseEntity<?> getArticle(@PathVariable("articleno") @ApiParam(value = "얻어올 글의 글번호.", required = true) int articleNo) {
+	@PostMapping("/{articleno}")
+	private ResponseEntity<?> getArticle(@PathVariable("articleno") @ApiParam(value = "얻어올 글의 글번호.", required = true) int articleNo, @RequestBody String userId) {
 		try {
 			logger.info("getArticle - 호출 : " + articleNo);
 			BoardDto boardDto = boardService.getArticle(articleNo);
@@ -90,12 +90,11 @@ public class BoardController {
 	}
 	
 	@ApiOperation(value = "게시판 댓글 보기", notes = "글번호에 해당하는 게시글의 댓글 정보를 반환한다.", response = List.class)
-	@PostMapping("/comment")
-	private ResponseEntity<?> getCommnet(@RequestBody @ApiParam(value = "얻어올 글의 글번호.", required = true) String articleNo) {
+	@PostMapping("/comment/{articleno}")
+	private ResponseEntity<?> getCommnet(@PathVariable("articleno") @ApiParam(value = "얻어올 글의 글번호.", required = true) int articleNo, @RequestBody String userId) {
 		try {
 			logger.info("BoardController:: getComment - 호출 : " + articleNo);
-			int num = Integer.parseInt(articleNo);
-			List<CommentDto> list = boardService.getComment(num);
+			List<CommentDto> list = boardService.getComment(articleNo);
 			if(list != null) {
 				return new ResponseEntity<List<CommentDto>>(list, HttpStatus.OK); 
 			}else {

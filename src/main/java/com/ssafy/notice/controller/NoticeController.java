@@ -79,8 +79,8 @@ public class NoticeController {
 	}
 	
 	@ApiOperation(value = "공지사항 상세보기", notes = "글번호에 해당하는 공지사항의 정보를 반환한다.", response = NoticeDto.class)
-	@GetMapping("/{articleno}")
-	private ResponseEntity<?> getArticle(@PathVariable("articleno") @ApiParam(value = "얻어올 글의 글번호.", required = true) int articleNo, HttpSession session) {
+	@PostMapping("/{articleno}")
+	private ResponseEntity<?> getArticle(@PathVariable("articleno") @ApiParam(value = "얻어올 글의 글번호.", required = true) int articleNo, @RequestBody String userId) {
 		try {
 			logger.debug("NoticeController:: getArticle - 호출 : " + articleNo);
 			NoticeDto noticeDto = noticeService.getArticle(articleNo);
