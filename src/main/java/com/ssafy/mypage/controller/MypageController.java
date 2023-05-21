@@ -118,9 +118,6 @@ public class MypageController {
 		userId = userId.substring(1, userId.length()-1);
 		try {
 			List<HotplaceDto> list = hotplaceService.listMyHotplace(userId);
-			System.out.println("helloworld!!!!!!!!!!!!!!!!!!!!!!");
-			for(HotplaceDto h : list)
-				System.out.println(h.toString());
 			return new ResponseEntity<List<HotplaceDto>>(list, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
@@ -140,7 +137,6 @@ public class MypageController {
 		}
 	}
 	
-	//TODO: /like 메서드 구현
 	@PostMapping("/like")
 	@ApiOperation(value = "내가 좋아요 누른 핫플 목록을 반환한다.", response = List.class)
 	private ResponseEntity<?> listLike(@RequestBody @ApiParam(value = "내가 좋아요 한 핫플 리스트를 얻기위해 현재 로그인한 user id 정보.", required = true) String userId) {
