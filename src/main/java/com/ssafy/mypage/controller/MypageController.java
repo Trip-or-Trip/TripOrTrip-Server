@@ -118,6 +118,18 @@ public class MypageController {
 		userId = userId.substring(1, userId.length()-1);
 		try {
 			List<HotplaceDto> list = hotplaceService.listMyHotplace(userId);
+			List<LikeDto> listLike = hotplaceService.listLike(userId); // 해당 사용자가 좋아요 누른 list 반환(listLike에는 hotplace 번호가 담긴다)
+			
+			if(listLike.size() == 0 ) return new ResponseEntity<List<HotplaceDto>>(list, HttpStatus.OK);
+			
+			for(HotplaceDto hotplace : list) { // 모든 목록(DB)에 대해
+				for(LikeDto likes : listLike) { // 사용자의 모든 좋아요 목록(DB)을 보면서 
+					if(hotplace.getNum() == likes.getHotplaceId()) { // 같다면(좋아요를 누른 글이라면)
+						hotplace.setLike(true); // 해당 게시글 좋아요 처리(Dto)
+						break; // 탈출
+					}
+				}
+			}
 			return new ResponseEntity<List<HotplaceDto>>(list, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
