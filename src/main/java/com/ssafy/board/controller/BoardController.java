@@ -52,7 +52,8 @@ public class BoardController {
 
 	@ApiOperation(value = "게시판 글목록", notes = "모든 게시글의 정보를 반환한다.", response = List.class)
 	@GetMapping("/list")
-	private ResponseEntity<?> listArticle(@ApiParam(value = "게시글을 얻기위한 부가정보.", required = true)  BoardParameterDto boardParameterDto) {
+	private ResponseEntity<?> listArticle() {
+		BoardParameterDto boardParameterDto = new BoardParameterDto();
 		logger.debug("boardList call");
 		try {
 			List<BoardDto> list = boardService.listArticle(boardParameterDto);
@@ -62,27 +63,17 @@ public class BoardController {
 		}
 	}
 	
-//	@ApiOperation(value = "게시판 글목록", notes = "모든 게시글의 정보를 반환한다.", response = List.class)
-//	@PostMapping("/list/pgno/key/word")
-//	private ResponseEntity<?> listKeywordArticle(@ApiParam(value = "게시글을 얻기위한 부가정보.", required = true) @PathVariable("pgno") String pgno, @PathVariable("key") String key, @PathVariable("word") String word) {
-//		Map<String, String> map = new HashMap<String, String>();
-//		map.put("pgno", pgno);
-//		map.put("key", key);
-//		map.put("word", word);
-//		logger.debug("boardList call: {}", map);
-//		try {
-////			System.out.println(boardParameterDto.toString());
-//			
-//			List<BoardDto> list = boardService.listArticle(map);
-//			
-//			PageNavigation pageNavigation = boardService.makePageNavigation(map);
-////			mav.addObject("navigation", pageNavigation);
-//			
-//			return new ResponseEntity<List<BoardDto>>(list, HttpStatus.OK);
-//		} catch (Exception e) {
-//			return exceptionHandling(e);
-//		}
-//	}
+	@ApiOperation(value = "게시판 글목록", notes = "모든 게시글의 정보를 반환한다.", response = List.class)
+	@PostMapping("/list")
+	private ResponseEntity<?> listArticle(@ApiParam(value = "게시글을 얻기위한 부가정보.", required = true) @RequestBody BoardParameterDto boardParameterDto) {
+		logger.debug("boardList call => key: {}, word: {}", boardParameterDto.getKey(), boardParameterDto.getWord());
+		try {
+			List<BoardDto> list = boardService.listArticle(boardParameterDto);
+			return new ResponseEntity<List<BoardDto>>(list, HttpStatus.OK);
+		} catch (Exception e) {
+			return exceptionHandling(e);
+		}
+	}
 	
 	@ApiOperation(value = "게시판 글보기", notes = "글번호에 해당하는 게시글의 정보를 반환한다.", response = BoardDto.class)
 	@PostMapping("/{articleno}")

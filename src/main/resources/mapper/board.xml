@@ -22,7 +22,17 @@
 	
 	<sql id="search">
 		<if test="key != null and key != '' and word != null and word != ''">
-			and #{key} like concat('%', #{word}, '%')
+			<choose>
+				<when test="key == 'title'">
+					and title like concat('%', #{word}, '%')
+				</when>
+				<when test="key == 'user_id'">
+					and user_id = #{word}
+				</when>
+				<when test="key == 'content'">
+					and content like concat('%', #{word}, '%')
+				</when>
+			</choose>
 		</if>
 	</sql>
 
