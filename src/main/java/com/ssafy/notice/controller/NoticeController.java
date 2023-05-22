@@ -56,7 +56,8 @@ public class NoticeController {
 
 	@ApiOperation(value = "공지사항 글목록", notes = "모든 공지사항의 정보를 반환한다.", response = List.class)
 	@GetMapping("/list")
-	private ResponseEntity<?> listArticle(@ApiParam(value = "공지사항 얻기위한 부가정보.", required = true)  BoardParameterDto boardParameterDto) {
+	private ResponseEntity<?> listArticle() {
+		BoardParameterDto boardParameterDto = new BoardParameterDto();
 		logger.debug("NoticeController:: listArticle call");
 		try {
 			List<NoticeDto> list = noticeService.listArticle(boardParameterDto);
@@ -69,7 +70,7 @@ public class NoticeController {
 	@ApiOperation(value = "공지사항 글목록", notes = "모든 공지사항의 정보를 반환한다.", response = List.class)
 	@PostMapping("/list")
 	private ResponseEntity<?> listKeywordArticle(@ApiParam(value = "공지사항 얻기위한 부가정보.", required = true) @RequestBody BoardParameterDto boardParameterDto) {
-		logger.debug("NoticeController:: listArticle keyword call");
+		logger.debug("noticeList call => key: {}, word: {}", boardParameterDto.getKey(), boardParameterDto.getWord());
 		try {
 			List<NoticeDto> list = noticeService.listArticle(boardParameterDto);
 			return new ResponseEntity<List<NoticeDto>>(list, HttpStatus.OK);

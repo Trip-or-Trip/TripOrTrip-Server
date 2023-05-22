@@ -13,13 +13,18 @@
 	</resultMap>
 	
 	<sql id="search">
-		<if test="word != null and word != ''">
-			<if test="key == 'title'">
-				and title like concat('%', #{word}, '%')
-			</if>
-			<if test="key != 'title'">
-				and ${key} = #{word}
-			</if>
+		<if test="key != null and key != '' and word != null and word != ''">
+			<choose>
+				<when test="key == 'title'">
+					and title like concat('%', #{word}, '%')
+				</when>
+				<when test="key == 'user_id'">
+					and user_id = #{word}
+				</when>
+				<when test="key == 'content'">
+					and content like concat('%', #{word}, '%')
+				</when>
+			</choose>
 		</if>
 	</sql>
 
