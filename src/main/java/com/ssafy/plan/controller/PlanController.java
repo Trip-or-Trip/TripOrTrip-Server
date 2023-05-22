@@ -78,8 +78,8 @@ public class PlanController {
 	 * @return Map<String, Object> : plan, place, fastplace 담고 있다.
 	 */
 	@ApiOperation(value = "여행계획 상세보기", notes = "글번호에 해당하는 여행계획 정보(Map)를 반환한다.", response = HashMap.class)
-	@GetMapping("/{articleno}")
-	private ResponseEntity<?> getPlan(@PathVariable("articleno") @ApiParam(value = "얻어올 글의 글번호.", required = true) int articleNo, BoardParameterDto boardParameter) {
+	@PostMapping("/{articleno}")
+	private ResponseEntity<?> getPlan(@RequestBody @PathVariable("articleno") @ApiParam(value = "얻어올 글의 글번호.", required = true) int articleNo, BoardParameterDto boardParameter) {
 		try {
 			logger.info("PlanController:: getPlan - 호출 : " + articleNo);
 			Map<String, Object> result = new HashMap<>(); // PlanDto, PlaceDto, 추천경로 담는 HashMap
@@ -105,8 +105,7 @@ public class PlanController {
 	/** form 에서 여행 계획을 저장한다고 submit을 할 때 호출 됨 */
 	@ApiOperation(value = "여행 계획 작성", notes = "새로운 여행계획을 입력한다. 그리고 DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
 	@PostMapping("/write")
-	private ResponseEntity<?> writePlan(@RequestBody @ApiParam(value = "여행계획 정보.", required = true) PlanDto planDto 
-			){
+	private ResponseEntity<?> writePlan(@RequestBody @ApiParam(value = "여행계획 정보.", required = true) PlanDto planDto ){
 		logger.info("PlanController:: writePlan - 호출 ");
 		if(planDto.getPlaces().length == 0 ) {
 			return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);

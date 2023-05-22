@@ -9,8 +9,8 @@ public class PlanDto {
 	private String description;
 	private String createdAt;
 	private String updatedAt;
-	private Date startDate;
-	private Date endDate;
+	private String startDate;
+	private String endDate;
 	private String userId;
 	private int hit;
 	private PlaceDto places[];
@@ -64,19 +64,19 @@ public class PlanDto {
 		this.updatedAt = updatedAt;
 	}
 
-	public Date getStartDate() {
+	public String getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(Date startDate) {
+	public void setStartDate(String startDate) {
 		this.startDate = startDate;
 	}
 
-	public Date getEndDate() {
+	public String getEndDate() {
 		return endDate;
 	}
 
-	public void setEndDate(Date endDate) {
+	public void setEndDate(String endDate) {
 		this.endDate = endDate;
 	}
 
