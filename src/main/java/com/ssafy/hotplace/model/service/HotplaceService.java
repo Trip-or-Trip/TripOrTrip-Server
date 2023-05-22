@@ -10,6 +10,7 @@ import com.ssafy.like.model.LikeDto;
 public interface HotplaceService {
 //	List<HotplaceDto> listHotplace(Map<String, String> map) throws Exception;
 	List<HotplaceDto> listHotplace() throws SQLException;
+	List<HotplaceDto> listHotHotplace() throws SQLException;
 	List<HotplaceDto> listMyHotplace(String userId) throws SQLException;
 //	PageNavigation makePageNavigation(Map<String, String> map) throws Exception;
 //	int findLatestNum() throws Exception;

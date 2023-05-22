@@ -16,6 +16,7 @@ public interface BoardMapper {
 	void writeArticle(BoardDto boardDto) throws SQLException;
 	void writeComment(CommentDto commentDto) throws SQLException;
 	List<BoardDto> listArticle(BoardParameterDto boardParameterDto) throws SQLException;
+	List<BoardDto> listHotArticle() throws SQLException;
 //	List<BoardDto> listArticle(Map<String, Object> param) throws SQLException;
 	List<CommentDto> getComment(int articleNo) throws SQLException;
 	List<CommentDto> getCommentList(String userId) throws SQLException;

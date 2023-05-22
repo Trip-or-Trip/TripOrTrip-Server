@@ -71,6 +71,18 @@ public class PlanController {
 		}
 	}
 	
+	@ApiOperation(value = "인기 여행계획 목록", notes = "상위 조회수 10개의 여행계획 정보를 반환한다.", response = List.class)
+	@GetMapping("/list/hot")
+	private ResponseEntity<?> listHotPlan() {
+		logger.info("PlanController :: listHotPlan - 호출 " );
+		try {			
+			List<PlanDto> list = planService.listHotPlan();
+			return new ResponseEntity<List<PlanDto>>(list, HttpStatus.OK);
+		} catch (Exception e) {
+			return exceptionHandling(e);
+		}
+	}
+	
 	/**
 	 *  여행계획 상세 조회 메서드
 	 * @param articleNo : 조회할 게시글 번호

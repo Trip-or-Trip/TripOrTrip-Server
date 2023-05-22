@@ -64,6 +64,14 @@
   		created_at DESC
 	</select>
 	
+	<!--  hot 게시글 list -->
+	<select id="listHotArticle" resultMap="board">
+		select *
+		from board
+		ORDER BY hit DESC
+		limit 10
+	</select>
+	
 	<!--  댓글  list -->
 	<select id="getComment" parameterType="int" resultMap="comment">
 		select *

@@ -31,6 +31,13 @@
 		from hotplace
 	</select>
 	
+	<select id="listHotHotplace" resultMap="hotplace">
+		select *
+		from hotplace
+		order by like_cnt desc 
+		limit 10
+	</select>
+	
 	<select id="listMyHotplace" parameterType="string" resultMap="hotplace">
 		select *
 		from hotplace

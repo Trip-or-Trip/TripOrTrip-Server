@@ -38,6 +38,11 @@ public class HotplaceServiceImpl implements HotplaceService {
 	}
 	
 	@Override
+	public List<HotplaceDto> listHotHotplace() throws SQLException {
+		return hotplaceMapper.listHotHotplace();
+	}
+	
+	@Override
 	public List<HotplaceDto> listMyHotplace(String userId) throws SQLException {
 		return hotplaceMapper.listMyHotplace(userId);
 	}

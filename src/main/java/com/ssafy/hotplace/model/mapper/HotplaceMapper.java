@@ -13,6 +13,7 @@ import com.ssafy.like.model.LikeDto;
 public interface HotplaceMapper {
 //	List<HotplaceDto> listHotplace(Map<String, Object> param) throws Exception;
 	List<HotplaceDto> listHotplace() throws SQLException;
+	List<HotplaceDto> listHotHotplace() throws SQLException;
 	List<HotplaceDto> listMyHotplace(String userId) throws SQLException;
 //	int getTotalHotplaceCount(Map<String, Object> param) throws Exception;
 //	int findLatestNum() throws Exception;

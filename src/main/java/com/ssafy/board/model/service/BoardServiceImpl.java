@@ -39,6 +39,11 @@ public class BoardServiceImpl implements BoardService {
 		boardParameterDto.setStart(start);
 		return boardMapper.listArticle(boardParameterDto);
 	}
+	
+	@Override
+	public List<BoardDto> listHotArticle() throws Exception {
+		return boardMapper.listHotArticle();
+	}
 
 	@Override
 	public List<CommentDto> getComment(int articleNo) throws Exception {

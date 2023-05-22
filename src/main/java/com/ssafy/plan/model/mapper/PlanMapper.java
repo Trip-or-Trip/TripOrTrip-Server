@@ -25,6 +25,9 @@ public interface PlanMapper {
 	/** 여행 경로 리스트 출력 */
 	public List<PlanDto> listPlan(BoardParameterDto boardParameterDto) throws SQLException;
 
+	/** 인기 여행 경로 리스트 출력 */
+	public List<PlanDto> listHotPlan() throws SQLException;
+
 	/** 내가 작성한 여행 경로 리스트 출력 */
 	public List<PlanDto> listMyPlan(String userId) throws SQLException;
 	
