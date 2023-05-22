@@ -59,7 +59,7 @@
 		select *
 		from comment
 		where board_id = #{articleNo}
-		ORDER BY created_at DESC
+		ORDER BY created_at
 	</select>
 	
 	<!-- 내가쓴 댓글  list -->
