@@ -21,13 +21,8 @@
 	</resultMap>
 	
 	<sql id="search">
-		<if test="word != null and word != ''">
-			<if test="key == 'title'">
-				and title like concat('%', #{word}, '%')
-			</if>
-			<if test="key != 'title'">
-				and ${key} = #{word}
-			</if>
+		<if test="key != null and key != '' and word != null and word != ''">
+			and #{key} like concat('%', #{word}, '%')
 		</if>
 	</sql>
 
@@ -50,7 +45,7 @@
 		<where>
 			<include refid="search"></include>
 		</where>
-		 
+		
 		ORDER BY 
 		CASE 
 		  WHEN user_id = 'admin' THEN 0 

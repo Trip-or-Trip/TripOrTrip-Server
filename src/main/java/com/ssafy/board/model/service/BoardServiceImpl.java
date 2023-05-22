@@ -32,13 +32,30 @@ public class BoardServiceImpl implements BoardService {
 	public void writeComment (CommentDto commentDto) throws Exception {
 		boardMapper.writeComment(commentDto);
 	}
-
+	
 	@Override
 	public List<BoardDto> listArticle(BoardParameterDto boardParameterDto) throws Exception {
 		int start = boardParameterDto.getPg() == 0 ? 0 : (boardParameterDto.getPg() - 1) * boardParameterDto.getSpp();
 		boardParameterDto.setStart(start);
 		return boardMapper.listArticle(boardParameterDto);
 	}
+	
+//	@Override
+//	public List<BoardDto> listArticle(Map<String, String> map) throws Exception {
+//		Map<String, Object> param = new HashMap<String, Object>();
+//		
+//		String key = map.get("key");
+//		param.put("key", key.isEmpty() ? "" : key);
+//		param.put("word", map.get("word").isEmpty() ? "" : map.get("word"));
+//		
+//		int pgno = Integer.parseInt(map.get("pgno"));
+//		int start = pgno * SizeConstant.LIST_SIZE - SizeConstant.LIST_SIZE;
+//		param.put("start", start);
+//		param.put("listsize", SizeConstant.LIST_SIZE);
+//		
+//		return boardMapper.listArticle(param);
+//	}
+
 	@Override
 	public List<CommentDto> getComment(int articleNo) throws Exception {
 		return boardMapper.getComment(articleNo);
