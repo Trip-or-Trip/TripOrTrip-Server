@@ -159,38 +159,19 @@ public class BoardController {
 		}
 	}
 	
-//	@ApiOperation(value = "게시판 글작성", notes = "새로운 게시글 정보를 입력한다. 그리고 DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
-//	@PostMapping("/write")
-//	private ResponseEntity<?> writeArticle(@RequestBody @ApiParam(value = "게시글 정보.", required = true) BoardDto boardDto){
-//		logger.debug("BoardController: writeAricle - 호출");
-////		UserDto userDto = (UserDto) session.getAttribute("userinfo");
-////		boardDto.setUserId(userDto.getId());
-//		
-//		try {
-//			boardService.writeArticle(boardDto);
-//			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
-//		} catch (Exception e) {
-//			return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
-//		}
-//	}
-	
 	@ApiOperation(value = "게시판 글작성", notes = "새로운 게시글 정보를 입력한다. 그리고 DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
 	@PostMapping("/write")
 	private ResponseEntity<?> writeArticle(@RequestBody @ApiParam(value = "게시글 정보.", required = true) BoardDto boardDto){
 		logger.debug("BoardController: writeAricle - 호출");
 //		UserDto userDto = (UserDto) session.getAttribute("userinfo");
 //		boardDto.setUserId(userDto.getId());
-		String original = boardDto.getTitle();
+		
 		try {
-			for(int i = 1; i <= 100; i++) {
-				boardDto.setTitle(original + " " + i);
-				boardService.writeArticle(boardDto);
-			}
+			boardService.writeArticle(boardDto);
 			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
 		}
-		
 	}
 	
 	@ApiOperation(value = "게시판 글수정", notes = "수정할 게시글 정보를 입력한다. 그리고 DB수정 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
