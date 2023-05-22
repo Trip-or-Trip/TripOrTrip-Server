@@ -21,13 +21,18 @@
 	</resultMap>
 	
 	<sql id="search">
-		<if test="word != null and word != ''">
-			<if test="key == 'title'">
-				and title like concat('%', #{word}, '%')
-			</if>
-			<if test="key != 'title'">
-				and ${key} = #{word}
-			</if>
+		<if test="key != null and key != '' and word != null and word != ''">
+			<choose>
+				<when test="key == 'title'">
+					and title like concat('%', #{word}, '%')
+				</when>
+				<when test="key == 'user_id'">
+					and user_id = #{word}
+				</when>
+				<when test="key == 'content'">
+					and content like concat('%', #{word}, '%')
+				</when>
+			</choose>
 		</if>
 	</sql>
 
@@ -50,7 +55,7 @@
 		<where>
 			<include refid="search"></include>
 		</where>
-		 
+		
 		ORDER BY 
 		CASE 
 		  WHEN user_id = 'admin' THEN 0 
@@ -59,12 +64,20 @@
   		created_at DESC
 	</select>
 	
+	<!--  hot 게시글 list -->
+	<select id="listHotArticle" resultMap="board">
+		select *
+		from board
+		ORDER BY hit DESC
+		limit 10
+	</select>
+	
 	<!--  댓글  list -->
 	<select id="getComment" parameterType="int" resultMap="comment">
 		select *
 		from comment
 		where board_id = #{articleNo}
-		ORDER BY created_at DESC
+		ORDER BY created_at
 	</select>
 	
 	<!-- 내가쓴 댓글  list -->

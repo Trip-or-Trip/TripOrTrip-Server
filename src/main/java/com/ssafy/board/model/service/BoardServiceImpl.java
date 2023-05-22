@@ -32,13 +32,19 @@ public class BoardServiceImpl implements BoardService {
 	public void writeComment (CommentDto commentDto) throws Exception {
 		boardMapper.writeComment(commentDto);
 	}
-
+	
 	@Override
 	public List<BoardDto> listArticle(BoardParameterDto boardParameterDto) throws Exception {
 		int start = boardParameterDto.getPg() == 0 ? 0 : (boardParameterDto.getPg() - 1) * boardParameterDto.getSpp();
 		boardParameterDto.setStart(start);
 		return boardMapper.listArticle(boardParameterDto);
 	}
+	
+	@Override
+	public List<BoardDto> listHotArticle() throws Exception {
+		return boardMapper.listHotArticle();
+	}
+
 	@Override
 	public List<CommentDto> getComment(int articleNo) throws Exception {
 		return boardMapper.getComment(articleNo);
