@@ -1,6 +1,9 @@
 package com.ssafy.user.model.service;
 
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,7 +17,8 @@ import com.ssafy.user.model.mapper.UserMapper;
 
 @Service
 public class UserServiceImpl implements UserService {
-	
+	private Map<String, Integer> authInfo = new HashMap<>();
+
 	@Autowired
 	private JavaMailSender mailSender;
 	
@@ -80,6 +84,37 @@ public class UserServiceImpl implements UserService {
 		userMapper.updatePassword(id, tempPassword);
 		return mailDto;
 		
+	}
+	
+	@Override
+	public MailDto authEmailAddress(String emailId, String emailDomain) throws SQLException {
+		
+		Random random = new Random();		//랜덤 함수 선언
+		int createNum = 0;  			//1자리 난수
+		String ranNum = ""; 			//1자리 난수 형변환 변수
+        int letter    = 6;			//난수 자릿수:6
+		String resultNum = "";  		//결과 난수
+		
+		for (int i=0; i<letter; i++) { 
+			createNum = random.nextInt(9);		//0부터 9까지 올 수 있는 1자리 난수 생성
+			ranNum =  Integer.toString(createNum);  //1자리 난수를 String으로 형변환
+			resultNum += ranNum;			//생성된 난수(문자열)을 원하는 수(letter)만큼 더하며 나열
+		}	
+		authInfo.put(emailId+"@"+emailDomain, Integer.parseInt(resultNum));
+		
+		MailDto mailDto = new MailDto();
+		mailDto.setAddress(emailId + "@" + emailDomain);
+		mailDto.setTitle("Trip or Trip! 이메일 인증 확인 이메일입니다.");
+		mailDto.setMessage("안녕하세요. Trip or Trip! 이메일 인증번호 안내 관련 이메일입니다.\n 회원님의 인증번호는 "
+                + resultNum + " 입니다.\n");
+		
+		return mailDto;
+	}
+	
+	@Override
+	public boolean checkAuthNumber(String email, int number) throws SQLException{
+		if(authInfo.get(email) == number) return true;
+		return false;
 	}
 
 	@Override

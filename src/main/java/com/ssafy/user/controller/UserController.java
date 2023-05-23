@@ -1,15 +1,13 @@
 package com.ssafy.user.controller;
 
 import java.sql.SQLException;
-import java.util.Enumeration;
+import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -153,6 +151,23 @@ public class UserController {
 		
 		int cnt = userService.emailCheck(emailId, emailDomain);
 		return cnt + "";
+	}
+	
+	@GetMapping("/auth/{emailId}/{emailDomain}")
+	@ApiOperation(value = "입력된 이메일로 인증번호를 전송한다.", response = Integer.class)
+	public String  sendEmailAuthCheck(@PathVariable("emailId") String emailId, @PathVariable("emailDomain") String emailDomain) throws Exception {
+		logger.debug("sendEmailAuthCheck sending email to : {}@{}", emailId, emailDomain);
+		
+		MailDto mail = userService.authEmailAddress(emailId, emailDomain);
+		userService.sendEmail(mail);
+		return "success";
+	}
+	
+	@GetMapping("/check/{emailId}/{emailDomain}/{number}")
+	@ApiOperation(value = "입력된 이메일로 전송된 인증번호를 검증한다.", response = Integer.class)
+	public boolean  emailAuthCheck(@PathVariable("emailId") String emailId, @PathVariable("emailDomain") String emailDomain, @PathVariable("number") int number) throws Exception {
+		logger.debug("emailAuthCheck 해당 메일로 보낸 인증번호 확인: {}@{}", emailId, emailDomain);
+		return userService.checkAuthNumber(emailId+"@"+emailDomain, number);
 	}
 	
 	@GetMapping("/password/{id}/{emailId}/{emailDomain}")
