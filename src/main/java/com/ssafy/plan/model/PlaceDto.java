@@ -15,6 +15,15 @@ public class PlaceDto {
 	/** 경도 */
 	private BigDecimal lng;
 	private String imageUrl;
+	private String mapUrl;
+
+	public String getMapUrl() {
+		return mapUrl;
+	}
+
+	public void setMapUrl(String mapUrl) {
+		this.mapUrl = mapUrl;
+	}
 
 	public int getId() {
 		return id;

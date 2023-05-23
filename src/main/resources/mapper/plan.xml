@@ -25,6 +25,7 @@
 		<result column="lat" property="lat"/>
 		<result column="lng" property="lng"/>
 		<result column="image_url" property="imageUrl"/>
+		<result column="map_url" property="mapUrl"/>
 	</resultMap>
 	
 	<!-- 여행 경로 추가 -->
@@ -36,8 +37,8 @@
 	
 	<!-- 여행지 추가 -->
 	<insert id="insertPlace" parameterType="placeDto">
-		insert into place (plan_id, place_id, name, address, lat, lng, image_url )
-		values (#{planId}, #{placeId}, #{name}, #{address}, #{lat}, #{lng}, #{imageUrl} )
+		insert into place (plan_id, place_id, name, address, lat, lng, image_url, map_url)
+		values (#{planId}, #{placeId}, #{name}, #{address}, #{lat}, #{lng}, #{imageUrl}, #{mapUrl} )
 	</insert>
 
 

@@ -76,6 +76,7 @@ CREATE TABLE `place` (
   `lat` DECIMAL(10, 8) NOT NULL,
   `lng` DECIMAL(11, 8) NOT NULL,
   `image_url` VARCHAR(255),
+  `map_url` VARCHAR(300),
   PRIMARY KEY (`id`),
   FOREIGN KEY (`plan_id`) REFERENCES `plan` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
