@@ -1,9 +1,9 @@
 package com.ssafy.plan.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +25,6 @@ import com.ssafy.board.model.BoardParameterDto;
 import com.ssafy.plan.model.PlaceDto;
 import com.ssafy.plan.model.PlanDto;
 import com.ssafy.plan.model.service.PlanService;
-import com.ssafy.user.model.UserDto;
 
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -75,9 +74,19 @@ public class PlanController {
 	@GetMapping("/list/hot")
 	private ResponseEntity<?> listHotPlan() {
 		logger.info("PlanController :: listHotPlan - 호출 " );
-		try {			
+		try {
+			Map<Object, Object> result = new HashMap<>();
 			List<PlanDto> list = planService.listHotPlan();
-			return new ResponseEntity<List<PlanDto>>(list, HttpStatus.OK);
+			result.put("plans", list);
+			
+			List<PlaceDto> places[] = new ArrayList[list.size()];
+			for(int i =0 ; i < list.size() ; i++) {
+				places[i] = planService.selectPlace(list.get(i).getId());
+				System.out.println(places[i].toString());
+			}
+			result.put("places", places);
+			
+			return new ResponseEntity<Map<Object, Object>>(result, HttpStatus.OK);
 		} catch (Exception e) {
 			return exceptionHandling(e);
 		}
