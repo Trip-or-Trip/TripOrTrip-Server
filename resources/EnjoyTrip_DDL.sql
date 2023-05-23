@@ -81,19 +81,6 @@ CREATE TABLE `place` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
--- 게시판 댓글 테이블
-CREATE TABLE `comment` (
-	`id` INT NOT NULL AUTO_INCREMENT,
-    `content` VARCHAR(500) NOT NULL,
-    `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `board_id` INT NOT NULL,
-    `user_id` VARCHAR(20) NOT NULL,
-    PRIMARY KEY(`id`),
-    FOREIGN KEY(`board_id`) REFERENCES `board` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY(`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
-
 -- 좋아요 테이블 (핫플레이스)
 create table `like` (
 	`id` INT NOT NULL AUTO_INCREMENT,
@@ -116,6 +103,19 @@ CREATE TABLE `board` (
     `hit` INT NOT NULL DEFAULT 0,
     PRIMARY KEY(`id`),
     FOREIGN KEY(`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+-- 게시판 댓글 테이블
+CREATE TABLE `comment` (
+   `id` INT NOT NULL AUTO_INCREMENT,
+   `content` VARCHAR(500) NOT NULL,
+   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+   `board_id` INT NOT NULL,
+   `user_id` VARCHAR(20) NOT NULL,
+   PRIMARY KEY(`id`),
+   FOREIGN KEY(`board_id`) REFERENCES `board` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+   FOREIGN KEY(`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 

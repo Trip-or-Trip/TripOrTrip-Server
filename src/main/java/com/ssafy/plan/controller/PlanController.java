@@ -100,7 +100,7 @@ public class PlanController {
 	 */
 	@ApiOperation(value = "여행계획 상세보기", notes = "글번호에 해당하는 여행계획 정보(Map)를 반환한다.", response = HashMap.class)
 	@PostMapping("/{articleno}")
-	private ResponseEntity<?> getPlan(@RequestBody @PathVariable("articleno") @ApiParam(value = "얻어올 글의 글번호.", required = true) int articleNo, BoardParameterDto boardParameter) {
+	private ResponseEntity<?> getPlan(@ApiParam(value = "얻어올 글의 글번호.", required = true) @PathVariable("articleno") int articleNo) {
 		try {
 			logger.info("PlanController:: getPlan - 호출 : " + articleNo);
 			Map<String, Object> result = new HashMap<>(); // PlanDto, PlaceDto, 추천경로 담는 HashMap
