@@ -29,7 +29,7 @@
 	</resultMap>
 	
 	<!-- 여행 경로 추가 -->
-	<insert id="insertPlan" parameterType="planDto">
+	<insert id="insertPlan" parameterType="planDto" useGeneratedKeys="true"  keyProperty="id">
 		insert into plan (title, description, start_date, end_date, user_id, hit )
 		values (#{title}, #{description}, #{startDate}, #{endDate}, #{userId}, 0 )
 	</insert>
@@ -40,12 +40,26 @@
 		insert into place (plan_id, place_id, name, address, lat, lng, image_url, map_url)
 		values (#{planId}, #{placeId}, #{name}, #{address}, #{lat}, #{lng}, #{imageUrl}, #{mapUrl} )
 	</insert>
+	
+	
+	<!-- 여행 경로 수정 -->
+	<update id="updatePlan" parameterType="planDto">
+		update plan
+		set title = #{title}, description = #{description}, start_date = #{startDate}, end_date = #{endDate}
+		where id = #{id}
+	</update>
 
 
 	<!--  여행 경로 삭제 -->
 	<delete id="deletePlan" parameterType="int">
 		delete from plan
 		where id = #{id}
+	</delete>
+	
+	<!-- 여행지 삭제 -->
+	<delete id="deletePlace" parameterType="int">
+		delete from place
+		where plan_id = #{planId}
 	</delete>
 	
 	

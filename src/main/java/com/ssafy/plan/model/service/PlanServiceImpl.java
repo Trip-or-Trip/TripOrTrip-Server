@@ -40,10 +40,25 @@ public class PlanServiceImpl implements PlanService {
 	public int insertPlace(PlaceDto placeDto) throws SQLException {
 		return planMapper.insertPlace(placeDto);
 	}
+	
+	@Override
+	public int updatePlan(PlanDto planDto) throws SQLException {
+		return planMapper.updatePlan(planDto);
+	}
+
+	@Override
+	public int updatePlace(PlaceDto placeDto) throws SQLException {
+		return planMapper.updatePlace(placeDto);
+	}
 
 	@Override
 	public int deletePlan(int id) throws SQLException {
 		return planMapper.deletePlan(id);
+	}
+	
+	@Override
+	public int deletePlace(int planId) throws SQLException {
+		return planMapper.deletePlace(planId);
 	}
 
 	@Override
@@ -227,5 +242,7 @@ public class PlanServiceImpl implements PlanService {
 	public List<PlaceDto> getPlanPlaces(int planId) throws SQLException {
 		return planMapper.getPlanPlaces(planId);
 	}
+
+
 
 }

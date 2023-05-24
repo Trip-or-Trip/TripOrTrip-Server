@@ -19,8 +19,17 @@ public interface PlanMapper {
 	/** 여행지 추가 */
 	public int insertPlace(PlaceDto placeDto) throws SQLException;
 
+	/** 여행 경로 수정 */
+	public int updatePlan(PlanDto planDto) throws SQLException;
+	
+	/** 여행지 수정 */
+	public int updatePlace(PlaceDto placeDto) throws SQLException;
+
 	/** 여행 경로 삭제 */
 	public int deletePlan(int id) throws SQLException;
+	
+	/** 여행지 삭제 */
+	public int deletePlace(int planId) throws SQLException;
 
 	/** 여행 경로 리스트 출력 */
 	public List<PlanDto> listPlan(BoardParameterDto boardParameterDto) throws SQLException;

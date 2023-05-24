@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -140,6 +141,7 @@ public class PlanController {
 	/** form 에서 여행 계획을 저장한다고 submit을 할 때 호출 됨 */
 	@ApiOperation(value = "여행 계획 작성", notes = "새로운 여행계획을 입력한다. 그리고 DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
 	@PostMapping("/write")
+	@Transactional
 	private ResponseEntity<?> writePlan(@RequestBody @ApiParam(value = "여행계획 정보.", required = true) PlanDto planDto ){
 		logger.info("PlanController:: writePlan - 호출 ");
 		if(planDto.getPlaces().length == 0 ) {
@@ -147,14 +149,15 @@ public class PlanController {
 		}
 		try {
 			// 1. 여행지 계획 담기
-			planService.insertPlan(planDto);
-			planDto.setUserId("ssafy");
+			int planNum = planService.insertPlan(planDto);
+			System.out.println("planNum: " + planNum);
+//			planDto.setUserId("ssafy");
 			// 2. 여행지 정보 담기			
 			// 여행지 계획의 plan_id 가져오기
 			
-			int planId = planService.selectPlanId(planDto.getUserId(), planDto.getTitle());
+//			int planId = planService.selectPlanId(planDto.getUserId(), planDto.getTitle());
 			for (PlaceDto place : planDto.getPlaces()) {
-				place.setPlanId(planId);
+				place.setPlanId(planNum);
 				System.out.println(place.toString());
 				planService.insertPlace(place);
 			}
@@ -167,10 +170,29 @@ public class PlanController {
 	
 	@ApiOperation(value="여행 계획 수정", notes = "여행계획 정보를 입력한다. 그리고 DB수정 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
 	@PutMapping("/modify")
+	@Transactional
 	private ResponseEntity<String> modifyPlan(@RequestBody @ApiParam(value = "수정할 여행계획 정보.", required = true) PlanDto planDto) {
 		logger.debug("PlanController: modifyPlan - 호출");
+		if(planDto.getPlaces().length == 0 ) {
+			return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
+		}
 		try {
-//			planService.modifyPlan(planDto);
+			int planId = planDto.getId();
+			planService.updatePlan(planDto);
+			planService.deletePlace(planId);
+			for (PlaceDto place : planDto.getPlaces()) {
+				place.setPlanId(planId);
+				System.out.println(place.toString());
+				planService.insertPlace(place);
+			}
+			
+//			int planId = planService.selectPlanId(planDto.getUserId(), planDto.getTitle());
+//			for (PlaceDto place : planDto.getPlaces()) {
+//				place.setPlanId(planId);
+//				System.out.println(place.toString());
+//				planService.insertPlace(place);
+//			}
+			
 			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<String>(FAIL, HttpStatus.OK);
@@ -182,6 +204,7 @@ public class PlanController {
 	private ResponseEntity<String> deleteArticle(@PathVariable("articleno") @ApiParam(value = "살제할 글의 글번호.", required = true) int articleNo) {
 		try {
 			planService.deletePlan(articleNo);
+			planService.deletePlace(articleNo);
 			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 		} catch (Exception e1) {
 			return new ResponseEntity<String>(FAIL, HttpStatus.OK);
