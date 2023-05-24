@@ -8,6 +8,8 @@ public class BoardDto {
 	private String createdAt;
 	private String userId;
 	private int hit;
+	private String image;
+	
 	public int getId() {
 		return id;
 	}
@@ -44,9 +46,16 @@ public class BoardDto {
 	public void setHit(int hit) {
 		this.hit = hit;
 	}
+	public String getImage() {
+		return image;
+	}
+	public void setImage(String image) {
+		this.image = image;
+	}
+	
 	@Override
 	public String toString() {
 		return "BoardDto [id=" + id + ", title=" + title + ", content=" + content + ", createdAt=" + createdAt
-				+ ", userId=" + userId + ", hit=" + hit + "]";
+				+ ", userId=" + userId + ", hit=" + hit + ", image=" + image + "]";
 	}
 }

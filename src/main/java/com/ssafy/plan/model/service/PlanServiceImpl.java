@@ -89,11 +89,8 @@ public class PlanServiceImpl implements PlanService {
 	}
 
 	@Override
-	public int selectPlanId(String userId, String title) throws SQLException {
-		Map<String, String> userIdTitle = new HashMap<String, String>();
-		userIdTitle.put("userId", userId);
-		userIdTitle.put("title", title);
-		return planMapper.selectPlanId(userIdTitle);
+	public int selectPlanId(String userId) throws SQLException {
+		return planMapper.selectPlanId(userId);
 	}
 
 	@Override

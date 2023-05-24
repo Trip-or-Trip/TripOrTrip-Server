@@ -45,7 +45,7 @@ public interface PlanService {
 	public List<PlaceDto> selectPlace(int planId) throws SQLException;
 
 	/** 여행 경로 id 가져오기 */
-	public int selectPlanId(String userId, String title) throws SQLException;
+	public int selectPlanId(String userId) throws SQLException;
 	
 	/** 조회수 증가 */
 	public int updateHit(int articleNo) throws SQLException;

@@ -104,6 +104,9 @@ public class PlanController {
 	private ResponseEntity<?> getPlan(@ApiParam(value = "얻어올 글의 글번호.", required = true) @PathVariable("articleno") int articleNo) {
 		try {
 			logger.info("PlanController:: getPlan - 호출 : " + articleNo);
+			
+			planService.updateHit(articleNo);
+			
 			Map<String, Object> result = new HashMap<>(); // PlanDto, PlaceDto, 추천경로 담는 HashMap
 			
 			PlanDto planDto = planService.selectPlanOne(articleNo);
@@ -115,7 +118,6 @@ public class PlanController {
 			List<PlaceDto> fastDistanceList = planService.selectFastDistancePlace(articleNo);
 			result.put("fastPlaces", fastDistanceList);
 			
-			planService.updateHit(articleNo);
 			
 			// 기존에 Model로 받았었었는데 이제 Map으로 바꿨으니 Vue 에서도 Map으로 받아 처리 해줘야 함
 			return new ResponseEntity<Map<String, Object>>(result, HttpStatus.OK); 
@@ -149,15 +151,14 @@ public class PlanController {
 		}
 		try {
 			// 1. 여행지 계획 담기
-			int planNum = planService.insertPlan(planDto);
-			System.out.println("planNum: " + planNum);
+			planService.insertPlan(planDto);
 //			planDto.setUserId("ssafy");
 			// 2. 여행지 정보 담기			
 			// 여행지 계획의 plan_id 가져오기
 			
-//			int planId = planService.selectPlanId(planDto.getUserId(), planDto.getTitle());
+			int planId = planService.selectPlanId(planDto.getUserId());
 			for (PlaceDto place : planDto.getPlaces()) {
-				place.setPlanId(planNum);
+				place.setPlanId(planId);
 				System.out.println(place.toString());
 				planService.insertPlace(place);
 			}

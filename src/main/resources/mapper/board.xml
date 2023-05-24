@@ -10,6 +10,7 @@
 		<result column="created_at" property="createdAt" />
 		<result column="user_id" property="userId" />
 		<result column="hit" property="hit" />
+		<result column="image" property="image" />
 	</resultMap>
 	
 	<resultMap type="commentDto" id="comment">
@@ -18,6 +19,7 @@
 		<result column="created_at" property="createdAt" />
 		<result column="board_id" property="boardId" />
 		<result column="user_id" property="userId" />
+		<result column="image" property="image" />
 	</resultMap>
 	
 	<sql id="search">
@@ -74,8 +76,9 @@
 	
 	<!--  댓글  list -->
 	<select id="getComment" parameterType="int" resultMap="comment">
-		select *
-		from comment
+		select comment.id, content, created_at, board_id, user_id, image
+		from comment join user
+		on comment.user_id = user.id
 		where board_id = #{articleNo}
 		ORDER BY created_at
 	</select>
@@ -107,9 +110,10 @@
 	
 	<!--  게시글 단건 조회 -->
 	<select id="getArticle" parameterType="int" resultMap="board">
-		select *
-		from board
-		where id = #{id}
+		select board.id, title, content, created_at, user_id, hit, image
+		from board join user
+		on board.user_id = user.id
+		where board.id = #{id}
 	</select>
 	
 	<!--  조회수 증가 -->

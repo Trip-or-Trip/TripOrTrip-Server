@@ -14,6 +14,7 @@
 		<result column="end_date" property="endDate"/>
 		<result column="user_id" property="userId"/>
 		<result column="hit" property="hit"/>
+		<result column="image" property="image" />
 	</resultMap>
 	
 	<resultMap type="placeDto" id="place">
@@ -29,7 +30,7 @@
 	</resultMap>
 	
 	<!-- 여행 경로 추가 -->
-	<insert id="insertPlan" parameterType="planDto" useGeneratedKeys="true"  keyProperty="id">
+	<insert id="insertPlan" parameterType="planDto">
 		insert into plan (title, description, start_date, end_date, user_id, hit )
 		values (#{title}, #{description}, #{startDate}, #{endDate}, #{userId}, 0 )
 	</insert>
@@ -91,9 +92,10 @@
 	
 	<!-- 글 번호에 맞는 여행 경로 출력 -->
 	<select id="selectPlanOne" parameterType="int" resultMap="plan">
-		select id, title, description, created_at, updated_at, start_date, end_date, user_id, hit 
-		from plan
-		where id = #{articleNo}
+		select plan.id, title, description, created_at, updated_at, start_date, end_date, user_id, hit, image
+		from user join plan
+		on user.id = plan.user_id
+		where plan.id = #{articleNo}
 		order by created_at desc;
 	</select>
 	
@@ -115,10 +117,12 @@
 	</select>
 	
 	<!-- 여행 경로 id 가져오기 -->
-	<select id="selectPlanId" parameterType="map" resultType="int">
+	<select id="selectPlanId" parameterType="string" resultType="int">
 		select id
 		from plan
-		where user_id = #{userId} and title = #{title}
+		where user_id = #{userId}
+		order by created_at desc
+		limit 1
 	</select>
 	
 	<!-- 조회수 증가 -->

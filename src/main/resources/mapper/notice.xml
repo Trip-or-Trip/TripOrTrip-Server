@@ -10,6 +10,7 @@
 		<result column="created_at" property="createdAt" />
 		<result column="user_id" property="userId" />
 		<result column="hit" property="hit" />
+		<result column="image" property="image" />
 	</resultMap>
 	
 	<sql id="search">
@@ -61,9 +62,10 @@
 	
 	<!--  게시글 단건 조회 -->
 	<select id="getArticle" parameterType="int" resultMap="notice">
-		select *
-		from notice
-		where id = #{id}
+		select notice.id, title, content, created_at, user_id, hit, image
+		from notice join user
+		on notice.user_id = user.id
+		where notice.id = #{id}
 	</select>
 	
 	<!--  조회수 증가 -->

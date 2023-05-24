@@ -13,6 +13,8 @@ public class PlanDto {
 	private String endDate;
 	private String userId;
 	private int hit;
+	private String image;
+	
 	private PlaceDto places[];
 	
 	
@@ -96,10 +98,19 @@ public class PlanDto {
 		this.hit = hit;
 	}
 
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
 	@Override
 	public String toString() {
 		return "PlanDto [id=" + id + ", title=" + title + ", description=" + description + ", createdAt=" + createdAt
-				+ ", updatedAt=" + updatedAt + ", startDate=" + startDate + ", endDate=" + endDate + "]";
+				+ ", updatedAt=" + updatedAt + ", startDate=" + startDate + ", endDate=" + endDate + ", userId="
+				+ userId + ", hit=" + hit + ", image=" + image + "]";
 	}
 
 }
