@@ -122,6 +122,20 @@ public class PlanController {
 			return exceptionHandling(e);
 		}
 	}
+	
+	@ApiOperation(value = "핫 여행계획 지도 출력을 위한 메서드", notes = "글번호에 해당하는 여행계획(placeDto[])를 반환한다.", response = List.class)
+	@GetMapping("/list/{planId}")
+	private ResponseEntity<?> getPlaces(@ApiParam(value = "얻어올 planId", required = true) @PathVariable("planId") int planId) {
+		try {
+			logger.info("PlanController:: getPlaces - 호출 : " + planId);
+			List<PlaceDto> places = planService.getPlanPlaces(planId);
+			
+			// 기존에 Model로 받았었었는데 이제 Map으로 바꿨으니 Vue 에서도 Map으로 받아 처리 해줘야 함
+			return new ResponseEntity<List<PlaceDto>>(places, HttpStatus.OK); 
+		} catch (Exception e) {
+			return exceptionHandling(e);
+		}
+	}
 
 	/** form 에서 여행 계획을 저장한다고 submit을 할 때 호출 됨 */
 	@ApiOperation(value = "여행 계획 작성", notes = "새로운 여행계획을 입력한다. 그리고 DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)

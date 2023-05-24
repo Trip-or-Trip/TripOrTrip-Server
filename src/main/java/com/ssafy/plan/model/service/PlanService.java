@@ -44,6 +44,9 @@ public interface PlanService {
 	/** 최단 경로 여행지 리스트 출력 */
 	public List<PlaceDto> selectFastDistancePlace(int planId) throws SQLException;
 	
+	/** planId에 해당하는 places 리스트 출력 */
+	public List<PlaceDto> getPlanPlaces(int planId) throws SQLException;
+	
 	/** 여행 글 목록 네비게이션 */
 	public PageNavigation makePageNavigation(Map<String, String> map) throws Exception;
 }

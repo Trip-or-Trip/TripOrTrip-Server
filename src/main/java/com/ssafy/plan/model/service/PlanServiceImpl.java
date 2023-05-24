@@ -223,4 +223,9 @@ public class PlanServiceImpl implements PlanService {
 		return cnt;
 	}
 
+	@Override
+	public List<PlaceDto> getPlanPlaces(int planId) throws SQLException {
+		return planMapper.getPlanPlaces(planId);
+	}
+
 }

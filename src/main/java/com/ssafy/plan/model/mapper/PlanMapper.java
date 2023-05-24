@@ -37,6 +37,9 @@ public interface PlanMapper {
 	/** 여행 경로에 맞는 여행지 리스트 출력 */
 	public List<PlaceDto> selectPlace(int planId) throws SQLException;
 	
+	/** planId에 해당하는 모든 places return */
+	public List<PlaceDto> getPlanPlaces(int planId) throws SQLException;
+	
 	/** 여행 경로 id 가져오기 */
 	public int selectPlanId(Map<String, String> userIdTitle) throws SQLException;
 	

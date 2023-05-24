@@ -92,6 +92,14 @@
 		order by id
 	</select>
 	
+	<!-- 여행 경로에 맞는 여행지 리스트 출력 -->
+	<select id="getPlanPlaces" parameterType="int" resultMap="place">
+		select *
+		from place 
+		where plan_id = #{planId} 
+		order by id
+	</select>
+	
 	<!-- 여행 경로 id 가져오기 -->
 	<select id="selectPlanId" parameterType="map" resultType="int">
 		select id
