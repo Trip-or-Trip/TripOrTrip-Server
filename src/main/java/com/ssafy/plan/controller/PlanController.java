@@ -93,6 +93,20 @@ public class PlanController {
 		}
 	}
 	
+	@ApiOperation(value = "인기 여행계획 장소 목록", notes = "상위 등록된 4개의 여행 장소 정보를 반환한다.", response = List.class)
+	@GetMapping("/list/place")
+	private ResponseEntity<?> listPlaces() {
+		logger.info("PlanController :: listPlaces - 호출 " );
+		try {
+			Map<Object, Object> result = new HashMap<>();
+			List<PlaceDto> list = planService.listPlaces();
+			
+			return new ResponseEntity<List<PlaceDto>>(list, HttpStatus.OK);
+		} catch (Exception e) {
+			return exceptionHandling(e);
+		}
+	}
+	
 	/**
 	 *  여행계획 상세 조회 메서드
 	 * @param articleNo : 조회할 게시글 번호

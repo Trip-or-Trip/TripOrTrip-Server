@@ -74,6 +74,11 @@ public class PlanServiceImpl implements PlanService {
 	}
 	
 	@Override
+	public List<PlaceDto> listPlaces() throws SQLException {
+		return planMapper.listPlaces();
+	}
+	
+	@Override
 	public List<PlanDto> listMyPlan(String userId) throws SQLException {
 		return planMapper.listMyPlan(userId);
 	}

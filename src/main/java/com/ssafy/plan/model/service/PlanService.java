@@ -35,6 +35,9 @@ public interface PlanService {
 	/** 인기 여행 계획 리스트 출력 */
 	public List<PlanDto> listHotPlan() throws SQLException;
 	
+	/** 인기 여행 장소 리스트 출력 */
+	public List<PlaceDto> listPlaces() throws SQLException;
+	
 	/** 내가 작성한 여행 경로 리스트 출력 */
 	public List<PlanDto> listMyPlan(String userId) throws SQLException;
 	

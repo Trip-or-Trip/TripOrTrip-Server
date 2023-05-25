@@ -83,6 +83,14 @@
 		limit 4
 	</select>
 	
+	<!-- 여행 계획 등록 많은 상위 4개 출력 -->
+	<select id="listPlaces" resultMap="place">
+		select distinct p.place_id, p.name, p.address, p.lat, p.lng, p.image_url 
+		from place p inner join
+		(select place_id from place group by place_id order by count(place_id) desc limit 4) hotplaces
+		where p.place_id = hotplaces.place_id and p.image_url is not null;
+	</select>
+	
 	<!-- 내가 작성한 여행 경로 리스트 출력 -->
 	<select id="listMyPlan" parameterType="string" resultMap="plan">
 		select *
