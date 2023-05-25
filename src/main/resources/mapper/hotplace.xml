@@ -38,7 +38,7 @@
 		from hotplace join user
 		on hotplace.user_id = user.id
 		order by like_cnt desc 
-		limit 10
+		limit 8
 	</select>
 	
 	<select id="listMyHotplace" parameterType="string" resultMap="hotplace">
