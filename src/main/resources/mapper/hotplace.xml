@@ -11,13 +11,14 @@
 		<result column="title" property="title"></result>
 		<result column="join_date" property="joinDate"></result>
 		<result column="desc" property="desc"></result>
-		<result column="tag_one" property="tagOne"></result>
-		<result column="tag_two" property="tagTwo"></result>
+		<result column="tag1" property="tag1"></result>
+		<result column="tag2" property="tag2"></result>
 		<result column="latitude" property="latitude"></result>
 		<result column="longitude" property="longitude"></result>
 		<result column="map_url" property="mapUrl"></result>
 		<result column="like" property="like"></result>
 		<result column="like_cnt" property="likeCnt"></result>
+		<result column="user_image" property="userImage"></result>
 	</resultMap>
 	
 	<resultMap type="likeDto" id="like">
@@ -27,13 +28,15 @@
 	</resultMap>
 	
 	<select id="listHotplace" resultMap="hotplace">
-		select *
-		from hotplace
+		select user_id, num, hotplace.image, title, join_date, `desc`, tag1, tag2, latitude, longitude, map_url, `like`, like_cnt, user.image user_image
+		from hotplace join user
+		on hotplace.user_id = user.id
 	</select>
 	
 	<select id="listHotHotplace" resultMap="hotplace">
-		select *
-		from hotplace
+		select user_id, num, hotplace.image, title, join_date, `desc`, tag1, tag2, latitude, longitude, map_url, `like`, like_cnt, user.image user_image
+		from hotplace join user
+		on hotplace.user_id = user.id
 		order by like_cnt desc 
 		limit 10
 	</select>
