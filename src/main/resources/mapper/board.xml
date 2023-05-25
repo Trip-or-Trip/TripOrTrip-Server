@@ -68,8 +68,9 @@
 	
 	<!--  hot 게시글 list -->
 	<select id="listHotArticle" resultMap="board">
-		select *
-		from board
+		select board.id, title, content, created_at, user_id, hit, image
+		from board join user
+		on board.user_id = user.id
 		ORDER BY hit DESC
 		limit 10
 	</select>

@@ -76,10 +76,11 @@
 	
 	<!-- 인기 여행 경로 리스트 출력 -->
 	<select id="listHotPlan" resultMap="plan">
-		select *
-		from plan
+		select plan.id, title, description, created_at, updated_at, start_date, end_date, user_id, hit, image
+		from plan join user
+		on plan.user_id = user.id
 		order by hit desc
-		limit 10
+		limit 4
 	</select>
 	
 	<!-- 내가 작성한 여행 경로 리스트 출력 -->
